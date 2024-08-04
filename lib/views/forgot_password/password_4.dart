@@ -1,0 +1,65 @@
+import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
+
+class ForgetPasswordView4 extends StatelessWidget {
+  const ForgetPasswordView4({super.key});
+
+  Future<void> _launchEmail() async {
+    final Uri params = Uri(
+      scheme: 'mailto',
+      path: '', // يمكنك وضع عنوان بريد إلكتروني افتراضي هنا
+      query: 'subject=Password Reset&body=Please reset my password', // يمكنك تخصيص الموضوع والجسم هنا
+    );
+    var url = params.toString();
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      // يمكنك عرض رسالة خطأ إذا لم يتمكن من فتح تطبيق البريد الإلكتروني
+      print('Could not launch $url');
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Column(
+        children: [
+          SizedBox(height: 204), // المسافة من AppBar
+          Center(
+            child: Image.asset("assets/images/Password Succesfully Ilustration.png"),
+          ),
+          SizedBox(height: 24),
+          Image.asset("assets/images/Tittle (9).png"),
+          Spacer(),
+          Padding(
+            padding: const EdgeInsets.only(bottom: 9.0), // الفارق بين الزرار وآخر الشاشة
+            child: SizedBox(
+              width: 327,
+              height: 48,
+              child: ElevatedButton(
+                onPressed: _launchEmail,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Color(0xFF2979FF), // لون الخلفية الأزرق
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(24.0), // حواف دائرية
+                  ),
+                ),
+                child: Center(
+                  child: Text(
+                    'Open email app',
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.white, // لون النص أبيض
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
