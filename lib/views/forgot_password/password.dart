@@ -1,8 +1,8 @@
 import 'dart:ui';
-
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:jobs_app/views/forgot_password/password_2.dart';
 import 'package:jobs_app/views/sign_up/login.dart';
 
 class PasswordView extends StatelessWidget {
@@ -66,7 +66,7 @@ class PasswordView extends StatelessWidget {
                       text: 'You remember your password? ',
                       style: TextStyle(
                         color: Color(0xFF9CA3AF),
-                        fontWeight: FontWeight.w500, // هنا يتم تعيين الوزن المتوسط
+                        fontWeight: FontWeight.w500,
                       ),
                       children: <TextSpan>[
                         TextSpan(
@@ -94,8 +94,10 @@ class PasswordView extends StatelessWidget {
                     width: 327,
                     child: ElevatedButton(
                       onPressed: () {
-                        // تنفيذ إجراء إعادة تعيين كلمة المرور
-                        print('Request password reset tapped');
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(builder: (context) => ForgetPassword2()), // تغيير هنا
+                        );
                       },
                       style: ElevatedButton.styleFrom(
                         padding: EdgeInsets.symmetric(vertical: 20),
@@ -150,7 +152,6 @@ class _EmailTextFieldState extends State<EmailTextField> {
   @override
   Widget build(BuildContext context) {
     return TextField(
-
       focusNode: _focusNode,
       decoration: InputDecoration(
         filled: true,

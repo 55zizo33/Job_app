@@ -172,8 +172,4 @@ class _Notification3State extends State<Notification3> {
   }
 }
 
-void main() {
-  runApp(MaterialApp(
-    home: Notification3(),
-  ));
-}
+

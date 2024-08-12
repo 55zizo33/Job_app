@@ -7,18 +7,14 @@ class HelpCenter extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Row(
-          children: [
-            IconButton(
-              icon: Icon(Icons.arrow_back),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-            SizedBox(width: 60), // التحكم في المسافة بين السهم والنص
-            Text('Help Center'),
-          ],
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
         ),
+        title: Text('Help Center'),
+        centerTitle: true, // لجعل النص في المنتصف
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -99,8 +95,4 @@ class HelpCenter extends StatelessWidget {
   }
 }
 
-void main() {
-  runApp(MaterialApp(
-    home: HelpCenter(),
-  ));
-}
+

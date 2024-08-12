@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:jobs_app/views/apply_job/apply_job1.dart';
+import 'package:jobs_app/views/apply_job/apply_job3.dart';
 
 class ApplyJob2View extends StatefulWidget {
   const ApplyJob2View({super.key});
-
   @override
   _ApplyJob2ViewState createState() => _ApplyJob2ViewState();
 }
@@ -73,17 +73,17 @@ class _ApplyJob2ViewState extends State<ApplyJob2View> {
               ),
               onPressed: _selectedJob != null
                   ? () {
-                setState(() {
-                  if (_currentStep < 2) {
-                    _currentStep += 1;
-                  } else {
-                    // Apply Now action
-                  }
-                });
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => ApplyJob3View()),
+                );
               }
                   : null,
               child: Center(
-                  child: Text('Next', style: TextStyle(fontSize: 16))),
+                  child: Text('Next', style: TextStyle(fontSize: 16,
+                    color: Colors.white
+                  )
+                  )),
             ),
           ],
         ),
@@ -173,4 +173,3 @@ class _ApplyJob2ViewState extends State<ApplyJob2View> {
     );
   }
 }
-

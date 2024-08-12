@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:jobs_app/views/profile_setting/help_center.dart';
+import 'package:jobs_app/views/profile_setting/profile.dart';
 
 class Terms extends StatelessWidget {
   const Terms({super.key});
@@ -8,19 +9,16 @@ class Terms extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Row(
-          children: [
-            IconButton(
-              icon: Icon(Icons.arrow_back),
-              onPressed: () {
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(builder: (context) => HelpCenter()),);              },
-            ),
-            SizedBox(width: 20),
-            Text('Terms & Conditions'),
-          ],
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => Profile()),
+            );
+          },
         ),
+        title: Text('Terms & Conditions'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -64,5 +62,3 @@ class Terms extends StatelessWidget {
     );
   }
 }
-
-

@@ -2,7 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:jobs_app/views/profile_setting/privacy_policy.dart';
+import 'package:jobs_app/views/home_screen/search.dart';
+import 'package:jobs_app/views/applied_job/applied_job5.dart';
 
 class AppliedJob4 extends StatelessWidget {
   const AppliedJob4({super.key});
@@ -18,7 +19,7 @@ class AppliedJob4 extends StatelessWidget {
           onPressed: () {
             Navigator.pushReplacement(
               context,
-              MaterialPageRoute(builder: (context) => PrivacyPolicy()),
+              MaterialPageRoute(builder: (context) => SearchView()),
             );
           },
         ),
@@ -206,49 +207,59 @@ class AppliedJob4 extends StatelessWidget {
   }
 
   Widget jobCard(BuildContext context, String title, String company, String logoPath, String jobType, String workType, String postDate, {bool isFirst = false}) {
-    return Card(
-      margin: const EdgeInsets.symmetric(vertical: 8.0),
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            ListTile(
-              leading: Image.asset(logoPath, width: 40, height: 40),
-              title: Text(title, style: TextStyle(fontWeight: FontWeight.bold)),
-              subtitle: Text(company),
-              trailing: SvgPicture.asset(
-                "assets/svg/archive-minus.svg",
-                color: isFirst ? Colors.blue : Colors.black,
+    return GestureDetector(
+      onTap: () {
+        if (isFirst) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => AppliedJob5()), // Navigate to AppliedJob5 on tap
+          );
+        }
+      },
+      child: Card(
+        margin: const EdgeInsets.symmetric(vertical: 8.0),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              ListTile(
+                leading: Image.asset(logoPath, width: 40, height: 40),
+                title: Text(title, style: TextStyle(fontWeight: FontWeight.bold)),
+                subtitle: Text(company),
+                trailing: SvgPicture.asset(
+                  "assets/svg/archive-minus.svg",
+                  color: isFirst ? Colors.blue : Colors.black,
+                ),
               ),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                jobDetailChip(jobType),
-                jobDetailChip(workType),
-                Text(postDate),
-              ],
-            ),
-            Divider(),
-            Container(
-              padding: const EdgeInsets.all(8.0),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(8.0),
-                border: Border.all(color: Colors.grey),
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  stepContainer('1', 'Biodata', true),
-                  Text('-----', style: TextStyle(color: Colors.grey)),
-                  stepContainer('2', 'Type of work', isFirst),
-                  Text('-----', style: TextStyle(color: Colors.grey)),
-                  stepContainer('3', 'Upload portfolio', false),
+                  jobDetailChip(jobType),
+                  jobDetailChip(workType),
+                  Text(postDate),
                 ],
               ),
-            ),
-          ],
+              Divider(),
+              Container(
+                padding: const EdgeInsets.all(8.0),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(8.0),
+                  border: Border.all(color: Colors.grey),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    stepContainer('1', 'Biodata', true),
+                    Text('-----', style: TextStyle(color: Colors.grey)),
+                    stepContainer('2', 'Type of work', isFirst),
+                    Text('-----', style: TextStyle(color: Colors.grey)),
+                    stepContainer('3', 'Upload portfolio', false),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -297,5 +308,3 @@ class AppliedJob4 extends StatelessWidget {
     );
   }
 }
-
-

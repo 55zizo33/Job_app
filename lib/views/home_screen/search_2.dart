@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:jobs_app/views/home_screen/search.dart';
+import 'package:jobs_app/views/home_screen/search3.dart';
 
 class Search2View extends StatefulWidget {
   @override
@@ -61,15 +61,6 @@ class _Search2ViewState extends State<Search2View> {
       appBar: AppBar(
         title: Row(
           children: [
-            IconButton(
-              icon: Icon(Icons.arrow_back),
-              onPressed: () {
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(builder: (context) => SearchView()),
-                );
-              },
-            ),
             Expanded(
               child: Container(
                 height: 48,
@@ -141,34 +132,42 @@ class _Search2ViewState extends State<Search2View> {
   Widget _buildSearchList(List<String> searches, String leadingIconPath, String trailingIconPath, Color trailingIconColor) {
     return Column(
       children: searches.map((search) {
-        return Container(
-          margin: const EdgeInsets.symmetric(vertical: 1.0),
-          padding: const EdgeInsets.all(8.0),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(8),
-            color: Colors.white,
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Row(
-                children: [
-                  SvgPicture.asset(leadingIconPath, width: 22, height: 22),
-                  SizedBox(width: 10),
-                  Text(search),
-                ],
-              ),
-              IconButton(
-                icon: trailingIconPath.endsWith('.svg')
-                    ? SvgPicture.asset(trailingIconPath, width: 22, height: 22, color: trailingIconColor)
-                    : Image.asset(trailingIconPath, width: 22, height: 22, color: trailingIconColor),
-                onPressed: () {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text('Button pressed for $search')),
-                  );
-                },
-              ),
-            ],
+        return GestureDetector(
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => Search3View()),
+            );
+          },
+          child: Container(
+            margin: const EdgeInsets.symmetric(vertical: 1.0),
+            padding: const EdgeInsets.all(8.0),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(8),
+              color: Colors.white,
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  children: [
+                    SvgPicture.asset(leadingIconPath, width: 22, height: 22),
+                    SizedBox(width: 10),
+                    Text(search),
+                  ],
+                ),
+                IconButton(
+                  icon: trailingIconPath.endsWith('.svg')
+                      ? SvgPicture.asset(trailingIconPath, width: 22, height: 22, color: trailingIconColor)
+                      : Image.asset(trailingIconPath, width: 22, height: 22, color: trailingIconColor),
+                  onPressed: () {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text('Button pressed for $search')),
+                    );
+                  },
+                ),
+              ],
+            ),
           ),
         );
       }).toList(),

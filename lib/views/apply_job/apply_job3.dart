@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
-import 'package:dotted_border/dotted_border.dart'; // استيراد مكتبة dotted_border
+import 'package:dotted_border/dotted_border.dart';
+import 'package:jobs_app/views/apply_job/upload_portfolio.dart';
 
 class ApplyJob3View extends StatefulWidget {
   const ApplyJob3View({super.key});
@@ -232,13 +233,13 @@ class _ApplyJob3ViewState extends State<ApplyJob3View> {
               Padding(
                 padding: const EdgeInsets.only(left: 15),
                 child: Text("Tittle",style: TextStyle(
-                  fontSize: 14,fontWeight: FontWeight.w500
+                    fontSize: 14,fontWeight: FontWeight.w500
                 ),),
               ),
               Text(
                 'Upload portfolio',
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500,color:
-                    Colors.black
+                Colors.black
                 ),
               ),
               Text(
@@ -261,7 +262,10 @@ class _ApplyJob3ViewState extends State<ApplyJob3View> {
                       padding: EdgeInsets.symmetric(vertical: 12, horizontal: 32),
                     ),
                     onPressed: () {
-                      // Handle submit action
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => UploadPortfolio()),
+                      );
                     },
                     child: Text('Submit', style: TextStyle(fontSize: 16, color: Colors.white)),
                   ),
@@ -274,5 +278,3 @@ class _ApplyJob3ViewState extends State<ApplyJob3View> {
     );
   }
 }
-
-

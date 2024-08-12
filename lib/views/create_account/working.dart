@@ -16,17 +16,7 @@ class _WorkingViewState extends State<WorkingView> {
   }
 
   Widget buildWorkTypeCard(String title, String imagePath) {
-    bool isSelected = selectedWorkType == title;
-    Color backgroundColor;
-    Color borderColor;
-
-    if (title == 'UI/UX Designer' || title == 'Research and Analytics') {
-      backgroundColor = Color(0xFFD6E4FF);
-      borderColor = Color(0xFF3366FF);
-    } else {
-      backgroundColor = isSelected ? Color(0xFFDCE7FF) : Colors.white;
-      borderColor = isSelected ? Color(0xFF3366FF) : Colors.grey.shade300;
-    }
+    bool isSelected = selectedWorkType == title; // تحقق مما إذا كانت الخانة محددة
 
     return Directionality(
       textDirection: TextDirection.rtl,
@@ -36,9 +26,9 @@ class _WorkingViewState extends State<WorkingView> {
           width: 154,
           height: 156,
           decoration: BoxDecoration(
-            color: backgroundColor,
+            color: isSelected ? Color(0xFFDCE7FF) : Colors.white, // تظليل الخلفية إذا كانت محددة
             borderRadius: BorderRadius.circular(10),
-            border: Border.all(color: borderColor),
+            border: Border.all(color: isSelected ? Color(0xFF3366FF) : Colors.grey.shade300), // تغيير لون الحدود
           ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -49,7 +39,7 @@ class _WorkingViewState extends State<WorkingView> {
                 title,
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  color: isSelected ? Color(0xFF3366FF) : Colors.black,
+                  color: isSelected ? Color(0xFF3366FF) : Colors.black, // تغيير لون النص إذا كانت الخانة محددة
                   fontWeight: FontWeight.bold,
                 ),
               ),

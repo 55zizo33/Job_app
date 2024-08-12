@@ -13,12 +13,12 @@ class _LanguageState extends State<Language> {
 
   final List<Map<String, String>> _languages = [
     {'name': 'English', 'flag': 'assets/images/England.png'},
-    {'name': 'Indonesia', 'flag': 'assets/images/Indonesia2.png'},
+    {'name': 'Indonesia', 'flag': 'assets/images/Indonesia.png'},
     {'name': 'Arabic', 'flag': 'assets/images/Saudi Arabia2.png'},
-    {'name': 'Chinese', 'flag': 'assets/images/China2.png'},
+    {'name': 'Chinese', 'flag': 'assets/images/China.png'},
     {'name': 'Dutch', 'flag': 'assets/images/Netherlands.png'},
-    {'name': 'French', 'flag': 'assets/images/France.png'},
-    {'name': 'German', 'flag': 'assets/images/Germany.png'},
+    {'name': 'French', 'flag': 'assets/images/France (1).png'},
+    {'name': 'German', 'flag': 'assets/images/Germany (1).png'},
     {'name': 'Japanese', 'flag': 'assets/images/Japan.png'},
     {'name': 'Korean', 'flag': 'assets/images/South Korea.png'},
     {'name': 'Portuguese', 'flag': 'assets/images/Portugal.png'},
@@ -70,10 +70,4 @@ class _LanguageState extends State<Language> {
   }
 }
 
-void main() {
-  runApp(
-    MaterialApp(
-      home: Language(),
-    ),
-  );
-}
+

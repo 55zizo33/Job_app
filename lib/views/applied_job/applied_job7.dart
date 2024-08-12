@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:jobs_app/views/applied_job/applied_job6.dart';
+import 'package:jobs_app/views/applied_job/applied_job8.dart';
 
 class ApplyJob7View extends StatefulWidget {
   const ApplyJob7View({super.key});
@@ -288,15 +289,17 @@ class _ApplyJob7ViewState extends State<ApplyJob7View> {
                   height: 48,
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Color(0xffD1D5DB),
+                      backgroundColor: Colors.blue,
                       shape: StadiumBorder(),
                       padding: EdgeInsets.symmetric(vertical: 12, horizontal: 32),
                     ),
                     onPressed: () {
-                      // Handle submit action
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => AppliedJob8()), // Navigate to AppliedJob8
+                      );
                     },
-                    child: Text('Submit', style: TextStyle(fontSize: 16, color: Colors.white)),
-                  ),
+                    child: Text('Submit', style: TextStyle(fontSize: 16, color: Colors.white)),),
                 ),
               ),
             ],
@@ -304,11 +307,4 @@ class _ApplyJob7ViewState extends State<ApplyJob7View> {
         ),
       ),
     );
-  }
-}
-
-void main() {
-  runApp(MaterialApp(
-    home: ApplyJob7View(),
-  ));
-}
+  }}

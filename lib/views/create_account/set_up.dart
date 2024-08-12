@@ -55,7 +55,6 @@ class SetUpView extends StatelessWidget {
               height: 48,
               child: ElevatedButton(
                 onPressed: () {
-                  // الانتقال إلى صفحة أخرى عند الضغط على الزر
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => LoginView()), // قم بإنشاء الصفحة الأخرى هنا

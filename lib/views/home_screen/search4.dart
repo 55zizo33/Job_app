@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:jobs_app/views/home_screen/search3.dart';
-import '../search5.dart'; // تأكد من أن المسار إلى صفحة Search3View صحيح
+import 'package:jobs_app/views/home_screen/search5.dart';
 
 class Search4View extends StatefulWidget {
   const Search4View({super.key});
@@ -226,8 +226,9 @@ class _Search4ViewState extends State<Search4View> {
               width: double.infinity,
               child: ElevatedButton(
                 onPressed: () {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text('Show result clicked')),
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => Search5View()),
                   );
                 },
                 child: Text('Show result',

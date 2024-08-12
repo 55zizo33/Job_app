@@ -1,8 +1,13 @@
 import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:jobs_app/views/applied_job/applied_job4.dart';
+import 'package:jobs_app/views/apply_job/job_detail.dart';
+import 'package:jobs_app/views/home_screen/search_2.dart';
+import 'package:jobs_app/views/messages/message2.dart';
+import 'package:jobs_app/views/saved/save_job.dart';
+import 'package:jobs_app/views/profile_setting/profile.dart';
 
 class SearchView extends StatefulWidget {
   @override
@@ -11,7 +16,7 @@ class SearchView extends StatefulWidget {
 
 class _SearchViewState extends State<SearchView> {
   int _currentIndex = 4;
-  bool isFirstIconPressed = false; // This will track if the first icon is pressed
+  bool isFirstIconPressed = false;
 
   @override
   Widget build(BuildContext context) {
@@ -22,24 +27,26 @@ class _SearchViewState extends State<SearchView> {
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    Text(
-                      'Hi, Rafif Dian',
-                      style: TextStyle(color: Colors.black, fontSize: 18),
-                    ),
-                    SizedBox(width: 4),
-                    Text('👋'),
-                  ],
-                ),
-                Text(
-                  'Create a better future for yourself here',
-                  style: TextStyle(color: Colors.grey, fontSize: 14),
-                ),
-              ],
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Text(
+                        'Hi, Rafif Dian',
+                        style: TextStyle(color: Colors.black, fontSize: 18),
+                      ),
+                      SizedBox(width: 4),
+                      Text('👋'),
+                    ],
+                  ),
+                  Text(
+                    'Create a better future for yourself here',
+                    style: TextStyle(color: Colors.grey, fontSize: 14),
+                  ),
+                ],
+              ),
             ),
             Container(
               decoration: BoxDecoration(
@@ -71,21 +78,34 @@ class _SearchViewState extends State<SearchView> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                TextField(
-                  decoration: InputDecoration(
-                    hintText: 'Search...',
-                    prefixIcon: Icon(Icons.search, color: Color(0xffD1D5DB)),
-                    border: OutlineInputBorder(
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => Search2View()),
+                    );
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white,
                       borderRadius: BorderRadius.circular(100.0),
-                      borderSide: BorderSide(
-                        color: Color(0xFF6200EE),
-                        width: 10.0,
+                      border: Border.all(
+                        color: Colors.grey[300]!,
+                        width: 1.0,
                       ),
                     ),
+                    padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+                    child: Row(
+                      children: [
+                        Icon(Icons.search, color: Color(0xffD1D5DB)),
+                        SizedBox(width: 8.0),
+                        Text(
+                          'Search...',
+                          style: TextStyle(color: Colors.grey, fontSize: 16.0),
+                        ),
+                      ],
+                    ),
                   ),
-                  onSubmitted: (value) {
-                    print('Search: $value');
-                  },
                 ),
                 SizedBox(height: 16),
                 Row(
@@ -97,7 +117,7 @@ class _SearchViewState extends State<SearchView> {
                     ),
                     GestureDetector(
                       onTap: () {
-                        print('View all pressed');
+                        // لا تفعل شيئًا عند الضغط على "View all"
                       },
                       child: Text(
                         'View all',
@@ -225,7 +245,7 @@ class _SearchViewState extends State<SearchView> {
                     ),
                     GestureDetector(
                       onTap: () {
-                        print('View all pressed');
+                        // هنا لن يقوم بتحويلك لأي صفحة
                       },
                       child: Text(
                         'View all',
@@ -297,6 +317,27 @@ class _SearchViewState extends State<SearchView> {
           onTap: (index) {
             setState(() {
               _currentIndex = index;
+              if (index == 0) {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => Profile()),
+                );
+              } else if (index == 1) {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => SaveJob()),
+                );
+              } else if (index == 2) {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => AppliedJob4()), // تعديل هنا
+                );
+              } else if (index == 3) {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => Message2()),
+                );
+              }
               print('Selected index: $_currentIndex');
             });
           },

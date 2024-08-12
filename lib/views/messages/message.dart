@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:jobs_app/views/apply_job/accepted.dart';
+import 'package:jobs_app/views/messages/message2.dart';
+import 'package:jobs_app/views/saved/save_job.dart';
 
 class MessageView extends StatelessWidget {
   const MessageView({super.key});
@@ -16,7 +17,7 @@ class MessageView extends StatelessWidget {
           onPressed: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => Accepted()),
+              MaterialPageRoute(builder: (context) => Message2()),
             );
           },
         ),
@@ -104,7 +105,8 @@ class MessageView extends StatelessWidget {
       builder: (BuildContext context) {
         return Container(
           padding: EdgeInsets.symmetric(vertical: 16.0),
-          child: SingleChildScrollView(scrollDirection: Axis.vertical,
+          child: SingleChildScrollView(
+            scrollDirection: Axis.vertical,
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -113,7 +115,10 @@ class MessageView extends StatelessWidget {
                   iconPath: 'assets/svg/briefcase.svg',
                   text: 'Visit job post',
                   onTap: () {
-                    Navigator.pop(context);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => SaveJob()),
+                    );
                   },
                 ),
                 _buildOptionItem(
@@ -164,7 +169,10 @@ class MessageView extends StatelessWidget {
     );
   }
 
-  Widget _buildOptionItem(BuildContext context, {required String iconPath, required String text, required VoidCallback onTap}) {
+  Widget _buildOptionItem(BuildContext context,
+      {required String iconPath,
+        required String text,
+        required VoidCallback onTap}) {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 4.0, horizontal: 16.0),
       decoration: BoxDecoration(
@@ -192,7 +200,8 @@ class MessageView extends StatelessWidget {
   Widget _buildReceivedMessage(String message, String time,
       {double rightPadding = 0, double leftPadding = 0}) {
     return Padding(
-      padding: EdgeInsets.only(right: rightPadding, left: leftPadding, top: 4.0, bottom: 4.0),
+      padding: EdgeInsets.only(
+          right: rightPadding, left: leftPadding, top: 4.0, bottom: 4.0),
       child: Align(
         alignment: Alignment.centerLeft,
         child: Container(
@@ -223,7 +232,8 @@ class MessageView extends StatelessWidget {
   Widget _buildReceivedMessageWithLink(String message, String time, String link,
       {double rightPadding = 0, double leftPadding = 0}) {
     return Padding(
-      padding: EdgeInsets.only(right: rightPadding, left: leftPadding, top: 4.0, bottom: 4.0),
+      padding: EdgeInsets.only(
+          right: rightPadding, left: leftPadding, top: 4.0, bottom: 4.0),
       child: Align(
         alignment: Alignment.centerLeft,
         child: Container(
@@ -268,7 +278,8 @@ class MessageView extends StatelessWidget {
   Widget _buildSentMessage(String message, String time,
       {double rightPadding = 0, double leftPadding = 0}) {
     return Padding(
-      padding: EdgeInsets.only(right: rightPadding, left: leftPadding, top: 4.0, bottom: 4.0),
+      padding: EdgeInsets.only(
+          right: rightPadding, left: leftPadding, top: 4.0, bottom: 4.0),
       child: Align(
         alignment: Alignment.centerRight,
         child: Container(

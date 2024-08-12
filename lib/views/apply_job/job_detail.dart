@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:jobs_app/views/apply_job/apply_job1.dart';
 
 class JobDetailView extends StatefulWidget {
   @override
@@ -116,7 +117,10 @@ class _JobDetailViewState extends State<JobDetailView> {
             padding: EdgeInsets.symmetric(vertical: 16),
           ),
           onPressed: () {
-            // Apply Now action
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => ApplyJobView()),
+            );
           },
           child: Text(
             'Apply now',
@@ -374,8 +378,4 @@ class _JobDetailViewState extends State<JobDetailView> {
   }
 }
 
-void main() {
-  runApp(MaterialApp(
-    home: JobDetailView(),
-  ));
-}
+

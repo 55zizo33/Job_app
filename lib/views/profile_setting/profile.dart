@@ -1,5 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:jobs_app/views/complete_profil/complete_profile.dart';
+import 'package:jobs_app/views/home_screen/search.dart';
+import 'package:jobs_app/views/on_boarding/splash.dart';
+import 'package:jobs_app/views/sign_up/login.dart';
+import 'terms.dart';
+import 'privacy_policy.dart';
+import 'help_center.dart';
 
 class Profile extends StatelessWidget {
   const Profile({super.key});
@@ -102,6 +109,27 @@ class Profile extends StatelessWidget {
                 Divider(color: Color(0xFFD1D5DB), indent: 16.0, endIndent: 16.0),
                 _buildListTile(context, 'Login and security', 'assets/svg/lock.svg', '/login_security'),
                 Divider(color: Color(0xFFD1D5DB), indent: 16.0, endIndent: 16.0),
+                ListTile(
+                  leading: CircleAvatar(
+                    radius: 20,
+                    backgroundColor: Color(0xFFD6E4FF),
+                    child: SvgPicture.asset(
+                      'assets/svg/profile.svg',
+                      width: 24,
+                      height: 24,
+                      color: Colors.blue,
+                    ),
+                  ),
+                  title: Text('Complete Profile'),
+                  trailing: Icon(Icons.arrow_forward_outlined, color: Colors.black),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => CompleteProfile()), // التنقل إلى صفحة CompleteProfile
+                    );
+                  },
+                ),
+                Divider(color: Color(0xFFD1D5DB), indent: 16.0, endIndent: 16.0),
                 SizedBox(height: 32,),
                 _buildSectionDivider('Others'),
                 ListTile(
@@ -128,7 +156,10 @@ class Profile extends StatelessWidget {
                   title: Text('Help Center'),
                   trailing: Icon(Icons.arrow_forward_outlined, color: Colors.black),
                   onTap: () {
-                    // هنا يمكنك إضافة التنقل للشاشة المقابلة
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => HelpCenter()), // Navigate to HelpCenter
+                    );
                   },
                 ),
                 Divider(color: Color(0xFFD1D5DB), indent: 16.0, endIndent: 16.0),
@@ -142,7 +173,10 @@ class Profile extends StatelessWidget {
                   title: Text('Terms & Conditions'),
                   trailing: Icon(Icons.arrow_forward_outlined, color: Colors.black),
                   onTap: () {
-                    // هنا يمكنك إضافة التنقل للشاشة المقابلة
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => Terms()), // Navigate to Terms
+                    );
                   },
                 ),
                 Divider(color: Color(0xFFD1D5DB), indent: 16.0, endIndent: 16.0),
@@ -156,7 +190,10 @@ class Profile extends StatelessWidget {
                   title: Text('Privacy Policy'),
                   trailing: Icon(Icons.arrow_forward_outlined, color: Colors.black),
                   onTap: () {
-                    // هنا يمكنك إضافة التنقل للشاشة المقابلة
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => PrivacyPolicy()), // Navigate to PrivacyPolicy
+                    );
                   },
                 ),
                 Divider(color: Color(0xFFD1D5DB), indent: 16.0, endIndent: 16.0),
@@ -172,16 +209,23 @@ class Profile extends StatelessWidget {
               leading: IconButton(
                 icon: Icon(Icons.arrow_back),
                 onPressed: () {
-                  Navigator.pop(context);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => SearchView()), // التنقل إلى صفحة SearchView عند الضغط على السهم
+                  );
                 },
               ),
               title: Text('Profile'),
               centerTitle: true,
               actions: [
                 IconButton(
-                  icon: SvgPicture.asset("assets/svg/logout.svg", color: Colors.blue),
+                  icon: Icon(Icons.logout, color: Colors.red),
                   onPressed: () {
-                    // قم بإضافة وظيفة الأيقونة هنا
+                    // تنفيذ عملية تسجيل الخروج
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(builder: (context) => LoginView()), // التنقل إلى صفحة تسجيل الدخول
+                    );
                   },
                 ),
               ],
@@ -220,7 +264,13 @@ class Profile extends StatelessWidget {
         selectedItemColor: Colors.blue,
         unselectedItemColor: Color(0xff9CA3AF),
         onTap: (index) {
-          // هنا يمكنك إضافة التنقل بين الشاشات بناءً على قيمة index
+          if (index == 2) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => LoginView()), // Navigate to AppliedJob4
+            );
+          }
+          // أضف التنقل للشاشات الأخرى إذا لزم الأمر
         },
       ),
     );

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:jobs_app/views/home_screen/search3.dart';
+import 'package:jobs_app/views/home_screen/search4.dart';
 
 class Search5View extends StatefulWidget {
   const Search5View({super.key});
@@ -29,7 +29,7 @@ class _Search5ViewState extends State<Search5View> {
               // رجوع إلى صفحة HomeScreen2View
               Navigator.pushReplacement(
                 context,
-                MaterialPageRoute(builder: (context) => Search3View()),
+                MaterialPageRoute(builder: (context) => Search4View()),
               );
             },
           ),
@@ -199,7 +199,7 @@ class _Search5ViewState extends State<Search5View> {
                   height: 200,
                 ),
                 SizedBox(height: 10),
-             Image.asset("assets/images/title 10.png")
+                Image.asset("assets/images/title 10.png")
               ],
             ),
           ],
@@ -234,5 +234,3 @@ class JobTypeChip extends StatelessWidget {
     );
   }
 }
-
-

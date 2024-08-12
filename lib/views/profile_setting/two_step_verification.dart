@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:jobs_app/views/profile_setting/help_center.dart';
 import 'package:jobs_app/views/profile_setting/login_security.dart';
 
 class TwoStepVerification extends StatefulWidget {
@@ -15,6 +16,7 @@ class _TwoStepVerificationState extends State<TwoStepVerification> {
   String selectedMethod = 'Telephone number (SMS)';
   final PageController _pageController = PageController();
   int currentPage = 0;
+  String otp = '';
 
   void nextPage() {
     if (currentPage < 3) {
@@ -40,6 +42,13 @@ class _TwoStepVerificationState extends State<TwoStepVerification> {
         );
       });
     }
+  }
+
+  void verifyOTP() {
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => HelpCenter()),
+    );
   }
 
   @override
@@ -334,19 +343,17 @@ class _TwoStepVerificationState extends State<TwoStepVerification> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('Enter the 6 digit code', style: TextStyle(fontWeight: FontWeight.bold)),
+          Text('Enter the 4 digit code', style: TextStyle(fontWeight: FontWeight.bold)),
           SizedBox(height: 12,),
           Text('Please confirm your account by entering the authorization code sent to ****-****-7234'),
           SizedBox(height: 20,),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              _buildVerificationCodeBox(),
-              _buildVerificationCodeBox(),
-              _buildVerificationCodeBox(),
-              _buildVerificationCodeBox(),
-              _buildVerificationCodeBox(),
-              _buildVerificationCodeBox(),
+              _buildVerificationCodeBox(0),
+              _buildVerificationCodeBox(1),
+              _buildVerificationCodeBox(2),
+              _buildVerificationCodeBox(3),
             ],
           ),
           SizedBox(height: 16),
@@ -358,7 +365,7 @@ class _TwoStepVerificationState extends State<TwoStepVerification> {
               height: 48,
               child: ElevatedButton(
                 onPressed: () {
-                  // تحقق من الرمز
+                  verifyOTP();
                 },
                 child: Text(
                   'Verify',
@@ -382,7 +389,7 @@ class _TwoStepVerificationState extends State<TwoStepVerification> {
     );
   }
 
-  Widget _buildVerificationCodeBox() {
+  Widget _buildVerificationCodeBox(int index) {
     return Container(
       width: 40,
       height: 40,
@@ -395,6 +402,22 @@ class _TwoStepVerificationState extends State<TwoStepVerification> {
           textAlign: TextAlign.center,
           keyboardType: TextInputType.number,
           inputFormatters: [FilteringTextInputFormatter.digitsOnly, LengthLimitingTextInputFormatter(1)],
+          onChanged: (value) {
+            if (value.length == 1) {
+              if (index < 3) {
+                FocusScope.of(context).nextFocus();
+              } else {
+                FocusScope.of(context).unfocus();
+              }
+              setState(() {
+                if (otp.length == 4) {
+                  otp = otp.substring(0, index) + value;
+                } else {
+                  otp += value;
+                }
+              });
+            }
+          },
           decoration: InputDecoration(
             border: InputBorder.none,
           ),

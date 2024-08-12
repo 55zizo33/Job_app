@@ -130,8 +130,4 @@ class _PhoneNumberState extends State<PhoneNumber> {
   }
 }
 
-void main() {
-  runApp(MaterialApp(
-    home: PhoneNumber(),
-  ));
-}
+

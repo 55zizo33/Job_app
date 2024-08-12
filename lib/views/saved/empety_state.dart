@@ -40,7 +40,6 @@ class _EmpetyStateState extends State<EmpetyState> {
             Image.asset("assets/images/Saved Ilustration.png"),
             SizedBox(height: 24,),
             Image.asset("assets/images/text11.png")
-
           ],
         ),
       ),
@@ -150,7 +149,17 @@ class _EmpetyStateState extends State<EmpetyState> {
         onTap: (index) {
           setState(() {
             _currentIndex = index;
-            print('Selected index: $_currentIndex');
+            if (index == 0) {
+              // Navigate to Home
+            } else if (index == 1) {
+              // Navigate to Messages
+            } else if (index == 2) {
+              // Navigate to Applied
+            } else if (index == 3) {
+              // Already on Saved
+            } else if (index == 4) {
+              // Navigate to Profile
+            }
           });
         },
       ),

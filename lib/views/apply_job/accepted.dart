@@ -1,7 +1,7 @@
-import 'dart:ui';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:jobs_app/views/home_screen/search.dart';
 
 class Accepted extends StatefulWidget {
   @override
@@ -9,9 +9,8 @@ class Accepted extends StatefulWidget {
 }
 
 class _AcceptedState extends State<Accepted> {
-  int _currentIndex = 4;
-  bool isSalaryIconPressed = false; // This will track if the salary icon is pressed
-  bool isBookmarkPressed = false; // This will track if the bookmark icon is pressed
+  int _currentIndex = 0;
+  bool isBookmarkPressed = false; // ده هيتابع لو الأيقونة مضغوط عليها ولا لأ
 
   @override
   Widget build(BuildContext context) {
@@ -19,38 +18,50 @@ class _AcceptedState extends State<Accepted> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    Text(
-                      'Hi, Rafif Dian',
-                      style: TextStyle(color: Colors.black, fontSize: 18),
-                    ),
-                    SizedBox(width: 4),
-                    Text('👋'),
-                  ],
-                ),
-                Text(
-                  'Create a better future for yourself here',
-                  style: TextStyle(color: Colors.grey, fontSize: 14),
-                ),
-              ],
-            ),
-            CircleAvatar(
-              backgroundColor: Colors.white,
-              child: IconButton(
-                icon: Icon(Icons.notifications_none, color: Color(0xFF292D32)),
-                onPressed: () {
-                  print('Notifications pressed');
-                },
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back, color: Colors.black),
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => SearchView()),
+            );
+          },
+        ),
+        title: SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Text(
+                        'Hi, Rafif Dian',
+                        style: TextStyle(color: Colors.black, fontSize: 18),
+                      ),
+                      SizedBox(width: 4),
+                      Text('👋'),
+                    ],
+                  ),
+                  Text(
+                    'Create a better future for yourself here',
+                    style: TextStyle(color: Colors.grey, fontSize: 14),
+                  ),
+                ],
               ),
-            ),
-          ],
+              CircleAvatar(
+                backgroundColor: Colors.white,
+                child: IconButton(
+                  icon: Icon(Icons.notifications_none, color: Color(0xFF292D32)),
+                  onPressed: () {
+                    print('Notifications pressed');
+                  },
+                ),
+              ),
+            ],
+          ),
         ),
       ),
       body: Padding(
@@ -105,7 +116,8 @@ class _AcceptedState extends State<Accepted> {
                           color: Color(0xFFB2ED82),
                           borderRadius: BorderRadius.circular(15.0),
                         ),
-                        child: Align(alignment: Alignment.topCenter,
+                        child: Align(
+                            alignment: Alignment.topCenter,
                             child: Text('Accepted', style: TextStyle(color: Color(0xFF1E88E5)))),
                       ),
                     ],
@@ -155,7 +167,7 @@ class _AcceptedState extends State<Accepted> {
                             ),
                           ),
                           IconButton(
-                            icon: Icon(Icons.bookmark_border, color: isBookmarkPressed ? Colors.blue : Colors.white),
+                            icon: Icon(isBookmarkPressed ? Icons.bookmark : Icons.bookmark_border, color: Colors.white),
                             onPressed: () {
                               setState(() {
                                 isBookmarkPressed = !isBookmarkPressed;
@@ -211,15 +223,13 @@ class _AcceptedState extends State<Accepted> {
                             width: 120,
                             height: 32,
                             child: ElevatedButton(
-                              onPressed: () {
-                                print('Apply now pressed');
-                              },
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: Colors.blue,
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(16.0),
                                 ),
                               ),
+                              onPressed: () {  },
                               child: Center(
                                 child: Text('Apply now', style: TextStyle(color: Colors.white)),
                               ),
@@ -351,7 +361,7 @@ class _AcceptedState extends State<Accepted> {
               children: [
                 Text(salary, style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Color(0xFF1E88E5))),
                 IconButton(
-                  icon: Icon(isBookmarkPressed ? Icons.bookmark : Icons.bookmark_border, color: isBookmarkPressed ? Colors.blue : Color(0xFF1E88E5)),
+                  icon: Icon(isBookmarkPressed ? Icons.bookmark : Icons.bookmark_border, color: Color(0xFF1E88E5)),
                   onPressed: () {
                     setState(() {
                       isBookmarkPressed = !isBookmarkPressed;
@@ -367,4 +377,5 @@ class _AcceptedState extends State<Accepted> {
     );
   }
 }
+
 

@@ -1,12 +1,12 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:jobs_app/views/on_boarding/splash.dart';
 import 'package:jobs_app/views/profile_setting/Portfolio.dart';
 import 'package:jobs_app/views/profile_setting/edite_profile.dart';
 import 'package:jobs_app/views/profile_setting/language.dart';
 import 'package:jobs_app/views/profile_setting/login_security.dart';
 import 'package:jobs_app/views/profile_setting/notification3.dart';
-import 'package:jobs_app/views/profile_setting/two_step_verification.dart';
 import 'core/app_theme.dart';
 import 'core/logic/cache_helper.dart';
 import 'core/logic/helper_methods.dart';
@@ -15,7 +15,6 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await CacheHelper.init();
   await EasyLocalization.ensureInitialized();
-
   runApp(
     EasyLocalization(
       supportedLocales: const [Locale("en"), Locale("ar")],
@@ -26,12 +25,14 @@ void main() async {
     ),
   );
 }
+
 class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
   @override
   State<MyApp> createState() => _MyAppState();
 }
+
 class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
@@ -45,13 +46,14 @@ class _MyAppState extends State<MyApp> {
         supportedLocales: context.supportedLocales,
         locale: context.locale,
         debugShowCheckedModeBanner: false,
-        home: TwoStepVerification(),
+        home: SplashView(),
         routes: {
           '/edit_profile': (context) => EditProfile(),
           '/portfolio': (context) => Portfolio(),
           '/language': (context) => Language(),
           '/notification': (context) => Notification3(),
           '/login_security': (context) => LoginSecurity(),
+          // إضافة المزيد من المسارات إذا كانت الشاشات الأخرى متعلقة بـ `CompleteProfile`
         },
       ),
     );

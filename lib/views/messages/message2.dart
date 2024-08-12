@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:jobs_app/views/home_screen/search.dart';
+import 'package:jobs_app/views/messages/message.dart';
+import 'package:jobs_app/views/messages/message3.dart';
+import 'package:jobs_app/views/messages/message4.dart';
 
 class Message2 extends StatefulWidget {
   const Message2({super.key});
@@ -33,7 +37,10 @@ class _Message2State extends State<Message2> {
         leading: IconButton(
           icon: Icon(Icons.arrow_back, color: Colors.black),
           onPressed: () {
-            Navigator.pop(context);
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => SearchView()),
+            );
           },
         ),
       ),
@@ -81,29 +88,73 @@ class _Message2State extends State<Message2> {
                           child: Column(
                             mainAxisSize: MainAxisSize.min,
                             children: [
-                              ListTile(
-                                leading: Icon(Icons.mail),
-                                title: Text('Unread'),
-                                onTap: () {
-                                  // تنفيذ التصفية للرسائل غير المقروءة
-                                  Navigator.pop(context);
-                                },
+                              Padding(
+                                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                                child: Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Text(
+                                    'Message filters',
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
                               ),
-                              ListTile(
-                                leading: Icon(Icons.report),
-                                title: Text('Spam'),
-                                onTap: () {
-                                  // تنفيذ التصفية للرسائل غير الهامة
-                                  Navigator.pop(context);
-                                },
+                              SizedBox(height: 16), // Add spacing between title and filters
+                              Container(
+                                margin: EdgeInsets.all(8.0),
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(30.0),
+                                  border: Border.all(color: Colors.grey, width: 0.5),
+                                ),
+                                child: ListTile(
+                                  title: Text('Unread'),
+                                  trailing: Icon(Icons.arrow_forward_ios, size: 16),
+                                  onTap: () {
+                                    Navigator.pop(context);
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(builder: (context) => Message3()), // Navigate to Message3
+                                    );
+                                  },
+                                ),
                               ),
-                              ListTile(
-                                leading: Icon(Icons.archive),
-                                title: Text('Archived'),
-                                onTap: () {
-                                  // تنفيذ التصفية للرسائل المؤرشفة
-                                  Navigator.pop(context);
-                                },
+                              Container(
+                                margin: EdgeInsets.all(8.0),
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(30.0),
+                                  border: Border.all(color: Colors.grey, width: 0.5),
+                                ),
+                                child: ListTile(
+                                  title: Text('Spam'),
+                                  trailing: Icon(Icons.arrow_forward_ios, size: 16),
+                                  onTap: () {
+                                    Navigator.pop(context);
+                                    // تنفيذ التصفية للرسائل غير الهامة
+                                  },
+                                ),
+                              ),
+                              Container(
+                                margin: EdgeInsets.all(8.0),
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(30.0),
+                                  border: Border.all(color: Colors.grey, width: 0.5),
+                                ),
+                                child: ListTile(
+                                  title: Text('Archived'),
+                                  trailing: Icon(Icons.arrow_forward_ios, size: 16),
+                                  onTap: () {
+                                    Navigator.pop(context);
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(builder: (context) => Message4()), // Navigate to Message4
+                                    );
+                                  },
+                                ),
                               ),
                             ],
                           ),
@@ -125,6 +176,17 @@ class _Message2State extends State<Message2> {
                   time: messages[index].time,
                   iconPath: messages[index].iconPath,
                   hasNotification: messages[index].hasNotification,
+                  onTap: () {
+                    // التحقق مما إذا كانت الرسالة من Twitter
+                    if (messages[index].sender == 'Twitter') {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => MessageView(),
+                        ),
+                      );
+                    }
+                  },
                 );
               },
             ),
@@ -261,6 +323,7 @@ class MessageTile extends StatelessWidget {
   final String time;
   final String iconPath;
   final bool hasNotification;
+  final VoidCallback? onTap;
 
   const MessageTile({
     required this.sender,
@@ -268,6 +331,7 @@ class MessageTile extends StatelessWidget {
     required this.time,
     required this.iconPath,
     required this.hasNotification,
+    this.onTap,
   });
 
   @override
@@ -303,7 +367,7 @@ class MessageTile extends StatelessWidget {
           Text(time, style: TextStyle(color: Colors.grey)),
         ],
       ),
+      onTap: onTap,
     );
   }
 }
-

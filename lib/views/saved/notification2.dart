@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:jobs_app/views/saved/notification.dart';
+import 'package:jobs_app/views/saved/save_job.dart';
 
 class Notification2 extends StatelessWidget {
   const Notification2({super.key});
@@ -20,7 +21,7 @@ class Notification2 extends StatelessWidget {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => NotificationView()),
+                MaterialPageRoute(builder: (context) => SaveJob()),
               );
             },
           ),

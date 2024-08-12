@@ -1,7 +1,8 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:http/http.dart' as http;
+import 'package:jobs_app/views/forgot_password/password_4.dart';
 import 'package:jobs_app/views/forgot_password/password_2.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class ForgetPasswordView3 extends StatefulWidget {
   const ForgetPasswordView3({super.key});
@@ -13,8 +14,41 @@ class ForgetPasswordView3 extends StatefulWidget {
 class _ForgetPasswordView3State extends State<ForgetPasswordView3> {
   bool _obscurePassword = true;
   bool _obscureConfirmPassword = true;
-  bool _isPasswordFieldFocused = false;
-  bool _isConfirmPasswordFieldFocused = false;
+  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _confirmPasswordController = TextEditingController();
+
+  // استبدل الرمز بالقيمة التي حصلت عليها من Postman
+  final String token = '12831|I2ZrJvSR1RjYuDWhEb8dBavOU01T9HDdsNUXUKUJ'; // ضع الرمز هنا
+
+  Future<void> _resetPassword() async {
+    if (_passwordController.text != _confirmPasswordController.text) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Passwords do not match')),
+      );
+      return;
+    }
+
+    final password = _passwordController.text;
+    final response = await http.post(
+      Uri.parse("https://project2.amit-learning.com/api/auth/user/update"), // الرابط الصحيح
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+      body: '{"password": "$password"}',
+    );
+
+    if (response.statusCode == 200) {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => ForgetPasswordView4()),
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Failed to reset password')),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +86,7 @@ class _ForgetPasswordView3State extends State<ForgetPasswordView3> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(height: 39), // المسافة بين AppBar والنص
+                SizedBox(height: 39),
                 Text(
                   'Create new password',
                   style: TextStyle(
@@ -68,48 +102,40 @@ class _ForgetPasswordView3State extends State<ForgetPasswordView3> {
                     color: Colors.grey,
                   ),
                 ),
-                SizedBox(height: 44), // المسافة بين النص والخانة الأولى
-                Focus(
-                  onFocusChange: (hasFocus) {
-                    setState(() {
-                      _isPasswordFieldFocused = hasFocus;
-                    });
-                  },
-                  child: TextField(
-                    obscureText: _obscurePassword,
-                    decoration: InputDecoration(
-                      prefixIcon: Padding(
-                        padding: const EdgeInsets.all(12.0),
-                        child: SvgPicture.asset(
-                          "assets/svg/lock.svg",
-                          color: _isPasswordFieldFocused
-                              ? Color(0xFF292D32)
-                              : Colors.grey,
-                        ),
+                SizedBox(height: 44),
+                TextField(
+                  controller: _passwordController,
+                  obscureText: _obscurePassword,
+                  decoration: InputDecoration(
+                    prefixIcon: Padding(
+                      padding: const EdgeInsets.all(12.0),
+                      child: SvgPicture.asset(
+                        "assets/svg/lock.svg",
+                        color: Colors.grey,
                       ),
-                      suffixIcon: IconButton(
-                        icon: Icon(
-                          _obscurePassword ? Icons.visibility_off : Icons.visibility,
-                        ),
-                        onPressed: () {
-                          setState(() {
-                            _obscurePassword = !_obscurePassword;
-                          });
-                        },
+                    ),
+                    suffixIcon: IconButton(
+                      icon: Icon(
+                        _obscurePassword ? Icons.visibility_off : Icons.visibility,
                       ),
-                      hintText: 'Password',
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8.0),
-                        borderSide: BorderSide(color: Colors.blue), // لون الحدود
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8.0),
-                        borderSide: BorderSide(color: Colors.blue), // لون الحدود عند التركيز
-                      ),
+                      onPressed: () {
+                        setState(() {
+                          _obscurePassword = !_obscurePassword;
+                        });
+                      },
+                    ),
+                    hintText: 'Password',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8.0),
+                      borderSide: BorderSide(color: Colors.blue),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8.0),
+                      borderSide: BorderSide(color: Colors.blue),
                     ),
                   ),
                 ),
-                SizedBox(height: 12), // المسافة بين الخانة الأولى والنص أسفلها
+                SizedBox(height: 12),
                 Text(
                   'Password must be at least 8 characters',
                   style: TextStyle(
@@ -117,48 +143,40 @@ class _ForgetPasswordView3State extends State<ForgetPasswordView3> {
                     color: Colors.grey,
                   ),
                 ),
-                SizedBox(height: 60), // المسافة بين الخانتين
-                Focus(
-                  onFocusChange: (hasFocus) {
-                    setState(() {
-                      _isConfirmPasswordFieldFocused = hasFocus;
-                    });
-                  },
-                  child: TextField(
-                    obscureText: _obscureConfirmPassword,
-                    decoration: InputDecoration(
-                      prefixIcon: Padding(
-                        padding: const EdgeInsets.all(12.0),
-                        child: SvgPicture.asset(
-                          "assets/svg/lock.svg",
-                          color: _isConfirmPasswordFieldFocused
-                              ? Color(0xFF292D32)
-                              : Colors.grey,
-                        ),
+                SizedBox(height: 60),
+                TextField(
+                  controller: _confirmPasswordController,
+                  obscureText: _obscureConfirmPassword,
+                  decoration: InputDecoration(
+                    prefixIcon: Padding(
+                      padding: const EdgeInsets.all(12.0),
+                      child: SvgPicture.asset(
+                        "assets/svg/lock.svg",
+                        color: Colors.grey,
                       ),
-                      suffixIcon: IconButton(
-                        icon: Icon(
-                          _obscureConfirmPassword ? Icons.visibility_off : Icons.visibility,
-                        ),
-                        onPressed: () {
-                          setState(() {
-                            _obscureConfirmPassword = !_obscureConfirmPassword;
-                          });
-                        },
+                    ),
+                    suffixIcon: IconButton(
+                      icon: Icon(
+                        _obscureConfirmPassword ? Icons.visibility_off : Icons.visibility,
                       ),
-                      hintText: 'Confirm Password',
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8.0),
-                        borderSide: BorderSide(color: Colors.blue), // لون الحدود
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8.0),
-                        borderSide: BorderSide(color: Colors.blue), // لون الحدود عند التركيز
-                      ),
+                      onPressed: () {
+                        setState(() {
+                          _obscureConfirmPassword = !_obscureConfirmPassword;
+                        });
+                      },
+                    ),
+                    hintText: 'Confirm Password',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8.0),
+                      borderSide: BorderSide(color: Colors.blue),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8.0),
+                      borderSide: BorderSide(color: Colors.blue),
                     ),
                   ),
                 ),
-                SizedBox(height: 9), // المسافة بين الخانة الثانية والنص أسفلها
+                SizedBox(height: 9),
                 Text(
                   'Both passwords must match',
                   style: TextStyle(
@@ -166,50 +184,32 @@ class _ForgetPasswordView3State extends State<ForgetPasswordView3> {
                     color: Colors.grey,
                   ),
                 ),
-                SizedBox(height: 200), // المسافة بين النص والزر
+                SizedBox(height: 200),
                 Center(
-                  child: GestureDetector(
-                    onTap: () {
-                      // تنفيذ إجراء إعادة تعيين كلمة المرور
-                      print('Reset password');
-                    },
-                    child: SizedBox(
-                      width: 327,
-                      height: 48,
-                      child: ElevatedButton(
-                        onPressed: () {
-                          // تنفيذ إجراء إعادة تعيين كلمة المرور
-                          print('Reset password');
-                        },
-                        style: ElevatedButton.styleFrom(
-                          padding: EdgeInsets.symmetric(vertical: 12),
-                          backgroundColor: Colors.blue,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(24.0),
-                          ),
+                  child: SizedBox(
+                    width: 327,
+                    height: 48,
+                    child: ElevatedButton(
+                      onPressed: _resetPassword,
+                      style: ElevatedButton.styleFrom(
+                        padding: EdgeInsets.symmetric(vertical: 12),
+                        backgroundColor: Colors.blue,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(24.0),
                         ),
-                        child: Align(
-                          alignment: Alignment.topCenter,
-                          child: Container(
-                            width: 113,
-                            height: 21,
-                            child: Center(
-                              child: Text(
-                                'Reset password',
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w500
-                                ),
-                              ),
-                            ),
-                          ),
+                      ),
+                      child: Text(
+                        'Reset password',
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Colors.white,
+                          fontWeight: FontWeight.w500,
                         ),
                       ),
                     ),
                   ),
                 ),
-                SizedBox(height: 9), // تعديل المسافة إلى 9
+                SizedBox(height: 9),
               ],
             ),
           ),
@@ -218,4 +218,3 @@ class _ForgetPasswordView3State extends State<ForgetPasswordView3> {
     );
   }
 }
-

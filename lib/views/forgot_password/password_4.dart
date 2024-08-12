@@ -1,23 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:jobs_app/views/sign_up/login.dart';
 
 class ForgetPasswordView4 extends StatelessWidget {
   const ForgetPasswordView4({super.key});
-
-  Future<void> _launchEmail() async {
-    final Uri params = Uri(
-      scheme: 'mailto',
-      path: '', // يمكنك وضع عنوان بريد إلكتروني افتراضي هنا
-      query: 'subject=Password Reset&body=Please reset my password', // يمكنك تخصيص الموضوع والجسم هنا
-    );
-    var url = params.toString();
-    if (await canLaunch(url)) {
-      await launch(url);
-    } else {
-      // يمكنك عرض رسالة خطأ إذا لم يتمكن من فتح تطبيق البريد الإلكتروني
-      print('Could not launch $url');
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,12 +17,18 @@ class ForgetPasswordView4 extends StatelessWidget {
           Image.asset("assets/images/Tittle (9).png"),
           Spacer(),
           Padding(
-            padding: const EdgeInsets.only(bottom: 9.0), // الفارق بين الزرار وآخر الشاشة
+            padding: const EdgeInsets.only(bottom: 9.0), // الفارق بين الزر وآخر الشاشة
             child: SizedBox(
               width: 327,
               height: 48,
               child: ElevatedButton(
-                onPressed: _launchEmail,
+                onPressed: () {
+                  // تحويل المستخدم إلى صفحة LoginView عند الضغط على الزر
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (context) => LoginView()),
+                  );
+                },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Color(0xFF2979FF), // لون الخلفية الأزرق
                   shape: RoundedRectangleBorder(
@@ -62,4 +53,5 @@ class ForgetPasswordView4 extends StatelessWidget {
     );
   }
 }
+
 

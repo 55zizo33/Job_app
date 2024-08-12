@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:jobs_app/views/saved/empety_state.dart';
+import 'package:jobs_app/views/saved/save_job.dart';
 
 class NotificationView extends StatelessWidget {
   const NotificationView({super.key});
@@ -20,7 +21,7 @@ class NotificationView extends StatelessWidget {
           onPressed: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => EmpetyState()),
+              MaterialPageRoute(builder: (context) => SaveJob()),
             );
           },
         ),
@@ -152,8 +153,4 @@ class NotificationTile extends StatelessWidget {
   }
 }
 
-void main() {
-  runApp(MaterialApp(
-    home: NotificationView(),
-  ));
-}
+

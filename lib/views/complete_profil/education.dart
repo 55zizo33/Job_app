@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:jobs_app/views/complete_profil/complete_profile.dart';
 import 'package:jobs_app/views/complete_profil/personal_details.dart';
 
 class Education extends StatefulWidget {
@@ -25,7 +26,7 @@ class _EducationState extends State<Education> {
           onPressed: () {
             Navigator.pushReplacement(
               context,
-              MaterialPageRoute(builder: (context) => PersonalDetails()),
+              MaterialPageRoute(builder: (context) => CompleteProfile()),
             );
           },
         ),

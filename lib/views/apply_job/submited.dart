@@ -1,7 +1,7 @@
-import 'dart:ui';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'accepted.dart';
 
 class SubmitedView extends StatefulWidget {
   @override
@@ -9,9 +9,9 @@ class SubmitedView extends StatefulWidget {
 }
 
 class _SubmitedViewState extends State<SubmitedView> {
-  int _currentIndex = 4;
-  bool isSalaryIconPressed = false; // This will track if the salary icon is pressed
-  bool isBookmarkPressed = false; // This will track if the bookmark icon is pressed
+  int _currentIndex = 0;
+  bool isBookmarkPressed = false; // يتابع إذا كانت الأيقونة مضغوط عليها أم لا
+  String applicationStatus = 'Submitted'; // متغير لتخزين حالة الطلب
 
   @override
   Widget build(BuildContext context) {
@@ -19,39 +19,50 @@ class _SubmitedViewState extends State<SubmitedView> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    Text(
-                      'Hi, Rafif Dian',
-                      style: TextStyle(color: Colors.black, fontSize: 18),
-                    ),
-                    SizedBox(width: 4),
-                    Text('👋'),
-                  ],
-                ),
-                Text(
-                  'Create a better future for yourself here',
-                  style: TextStyle(color: Colors.grey, fontSize: 14),
-                ),
-              ],
-            ),
-            CircleAvatar(
-              backgroundColor: Colors.white,
-              child: IconButton(
-                icon: Icon(Icons.notifications_none, color: Color(0xFF292D32)),
-                onPressed: () {
-                  print('Notifications pressed');
-                },
+        title: SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Text(
+                        'Hi, Rafif Dian',
+                        style: TextStyle(color: Colors.black, fontSize: 18),
+                      ),
+                      SizedBox(width: 4),
+                      Text('👋'),
+                    ],
+                  ),
+                  Text(
+                    'Create a better future for yourself here',
+                    style: TextStyle(color: Colors.grey, fontSize: 14),
+                  ),
+                ],
               ),
-            ),
-          ],
+              CircleAvatar(
+                backgroundColor: Colors.white,
+                child: IconButton(
+                  icon: Icon(Icons.notifications_none, color: Color(0xFF292D32)),
+                  onPressed: () {
+                    print('Notifications pressed');
+                  },
+                ),
+              ),
+            ],
+          ),
         ),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.refresh, color: Colors.black),
+            onPressed: () {
+              _refreshApplicationStatus();
+            },
+          ),
+        ],
       ),
       body: Padding(
         padding: EdgeInsets.all(16.0),
@@ -105,8 +116,9 @@ class _SubmitedViewState extends State<SubmitedView> {
                           color: Color(0xFFB2CDFD),
                           borderRadius: BorderRadius.circular(15.0),
                         ),
-                        child: Align(alignment: Alignment.topCenter,
-                            child: Text('Submitted', style: TextStyle(color: Color(0xFF1E88E5)))),
+                        child: Align(
+                            alignment: Alignment.topCenter,
+                            child: Text(applicationStatus, style: TextStyle(color: Color(0xFF1E88E5)))),
                       ),
                     ],
                   ),
@@ -155,7 +167,7 @@ class _SubmitedViewState extends State<SubmitedView> {
                             ),
                           ),
                           IconButton(
-                            icon: Icon(Icons.bookmark_border, color: isBookmarkPressed ? Colors.blue : Colors.white),
+                            icon: Icon(Icons.bookmark_border, color: Colors.white),
                             onPressed: () {
                               setState(() {
                                 isBookmarkPressed = !isBookmarkPressed;
@@ -212,7 +224,11 @@ class _SubmitedViewState extends State<SubmitedView> {
                             height: 32,
                             child: ElevatedButton(
                               onPressed: () {
-                                print('Apply now pressed');
+                                // هنا الانتقال لصفحة Accepted
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(builder: (context) => Accepted()),
+                                );
                               },
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: Colors.blue,
@@ -306,6 +322,20 @@ class _SubmitedViewState extends State<SubmitedView> {
     );
   }
 
+  void _refreshApplicationStatus() {
+    // في تطبيق حقيقي، هنا يمكن تنفيذ استدعاء API للتحقق من حالة الطلب
+    setState(() {
+      applicationStatus = 'Accepted'; // نفترض أن الحالة أصبحت "Accepted"
+    });
+
+    if (applicationStatus == 'Accepted') {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => Accepted()),
+      );
+    }
+  }
+
   Widget jobCard({
     required String title,
     required String company,
@@ -351,7 +381,7 @@ class _SubmitedViewState extends State<SubmitedView> {
               children: [
                 Text(salary, style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Color(0xFF1E88E5))),
                 IconButton(
-                  icon: Icon(isBookmarkPressed ? Icons.bookmark : Icons.bookmark_border, color: isBookmarkPressed ? Colors.blue : Color(0xFF1E88E5)),
+                  icon: Icon(isBookmarkPressed ? Icons.bookmark : Icons.bookmark_border, color: Color(0xFF1E88E5)),
                   onPressed: () {
                     setState(() {
                       isBookmarkPressed = !isBookmarkPressed;
@@ -367,4 +397,3 @@ class _SubmitedViewState extends State<SubmitedView> {
     );
   }
 }
-

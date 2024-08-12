@@ -1,9 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:jobs_app/views/applied_job/applied_job4.dart';
+import 'package:jobs_app/views/applied_job/applied_job6.dart';
 
-class AppliedJob5 extends StatelessWidget {
+class AppliedJob5 extends StatefulWidget {
   const AppliedJob5({super.key});
+
+  @override
+  _AppliedJob5State createState() => _AppliedJob5State();
+}
+
+class _AppliedJob5State extends State<AppliedJob5> {
+  final FocusNode _fullNameFocusNode = FocusNode();
+  final FocusNode _emailFocusNode = FocusNode();
+  final FocusNode _phoneFocusNode = FocusNode();
+  final FocusNode _typeOfWorkFocusNode = FocusNode(); // إضافة FocusNode للخانة 2
+
+  @override
+  void dispose() {
+    _fullNameFocusNode.dispose();
+    _emailFocusNode.dispose();
+    _phoneFocusNode.dispose();
+    _typeOfWorkFocusNode.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -69,7 +89,7 @@ class AppliedJob5 extends StatelessWidget {
                 children: [
                   stepContainer('1', 'Biodata', true),
                   Text('-----', style: TextStyle(color: Colors.blue)),
-                  stepContainer('2', 'Type of work', false),
+                  stepContainer('2', 'Type of work', _typeOfWorkFocusNode.hasFocus), // ربط التظليل بحالة التركيز
                   Text('-----', style: TextStyle(color: Colors.grey)),
                   stepContainer('3', 'Upload portfolio', false),
                 ],
@@ -92,37 +112,66 @@ class AppliedJob5 extends StatelessWidget {
             ),
             SizedBox(height: 24),
             TextFormField(
+              focusNode: _fullNameFocusNode,
               decoration: InputDecoration(
                 labelText: 'Full Name',
-                labelStyle: TextStyle(color: Colors.blue),
+                labelStyle: TextStyle(color: _fullNameFocusNode.hasFocus ? Colors.blue : Colors.grey),
                 prefixIcon: Padding(
                   padding: const EdgeInsets.all(12.0),
-                  child: SvgPicture.asset("assets/svg/frame.svg"),
+                  child: SvgPicture.asset(
+                    "assets/svg/frame.svg",
+                    color: _fullNameFocusNode.hasFocus ? Colors.blue : Colors.grey,
+                  ),
                 ),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(8.0),
+                  borderSide: BorderSide(color: _fullNameFocusNode.hasFocus ? Colors.blue : Colors.grey),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8.0),
+                  borderSide: BorderSide(color: Colors.blue),
                 ),
               ),
+              onTap: () {
+                setState(() {
+                  FocusScope.of(context).requestFocus(_fullNameFocusNode);
+                });
+              },
             ),
             SizedBox(height: 20),
             TextFormField(
+              focusNode: _emailFocusNode,
               decoration: InputDecoration(
                 labelText: 'Email',
-                labelStyle: TextStyle(color: Colors.blue),
+                labelStyle: TextStyle(color: _emailFocusNode.hasFocus ? Colors.blue : Colors.grey),
                 prefixIcon: Padding(
                   padding: const EdgeInsets.all(12.0),
-                  child: SvgPicture.asset("assets/svg/sms.svg"),
+                  child: SvgPicture.asset(
+                    "assets/svg/sms.svg",
+                    color: _emailFocusNode.hasFocus ? Colors.blue : Colors.grey,
+                  ),
                 ),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(8.0),
+                  borderSide: BorderSide(color: _emailFocusNode.hasFocus ? Colors.blue : Colors.grey),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8.0),
+                  borderSide: BorderSide(color: Colors.blue),
                 ),
               ),
+              onTap: () {
+                setState(() {
+                  FocusScope.of(context).requestFocus(_emailFocusNode);
+                });
+              },
             ),
             SizedBox(height: 20),
             TextFormField(
+              focusNode: _phoneFocusNode,
               decoration: InputDecoration(
                 labelText: 'No.Handphone',
-                labelStyle: TextStyle(color: Colors.blue),
+                labelStyle: TextStyle(color: _phoneFocusNode.hasFocus ? Colors.blue : Colors.grey),
                 prefixIcon: Padding(
                   padding: const EdgeInsets.all(12.0),
                   child: Row(
@@ -134,14 +183,24 @@ class AppliedJob5 extends StatelessWidget {
                         height: 24,
                       ),
                       SizedBox(width: 8), // مساحة بين العلم والأيقونة
-                      Icon(Icons.expand_more, color: Colors.grey),
+                      Icon(Icons.expand_more, color: _phoneFocusNode.hasFocus ? Colors.blue : Colors.grey),
                     ],
                   ),
                 ),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(8.0),
+                  borderSide: BorderSide(color: _phoneFocusNode.hasFocus ? Colors.blue : Colors.grey),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8.0),
+                  borderSide: BorderSide(color: Colors.blue),
                 ),
               ),
+              onTap: () {
+                setState(() {
+                  FocusScope.of(context).requestFocus(_phoneFocusNode);
+                });
+              },
             ),
             SizedBox(height: 50),
             Center(
@@ -150,7 +209,10 @@ class AppliedJob5 extends StatelessWidget {
                 height: 48,
                 child: ElevatedButton(
                   onPressed: () {
-                    // Add your onPressed code here!
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => AppliedJob6()), // Navigate to AppliedJob6
+                    );
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.blue,
@@ -201,5 +263,3 @@ class AppliedJob5 extends StatelessWidget {
     );
   }
 }
-
-

@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:jobs_app/views/apply_job/apply_job1.dart';
+import 'package:jobs_app/views/home_screen/search.dart';
+import 'package:jobs_app/views/home_screen/search4.dart';
 import 'package:jobs_app/views/home_screen/search_2.dart';
 
 class Search3View extends StatefulWidget {
@@ -29,7 +32,7 @@ class _Search3ViewState extends State<Search3View> {
               // رجوع إلى صفحة HomeScreenView
               Navigator.pushReplacement(
                 context,
-                MaterialPageRoute(builder: (context) => Search2View()),
+                MaterialPageRoute(builder: (context) => SearchView()),
               );
             },
           ),
@@ -98,13 +101,14 @@ class _Search3ViewState extends State<Search3View> {
                   children: [
                     InkWell(
                       onTap: () {
-                        // تنفيذ إجراء التصفية هنا
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text('Filter icon tapped')),
+                        // عند الضغط على الأيقونة، انتقل إلى صفحة Search4View
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => Search4View()),
                         );
                       },
                       child: Image.asset(
-                        'assets/images/setting-4.png',
+                        'assets/images/setting-4.png', // استخدم المسار الصحيح للأيقونة
                         width: 24, // يمكنك تعديل الحجم كما يناسبك
                         height: 24,
                       ),
@@ -254,114 +258,8 @@ class _Search3ViewState extends State<Search3View> {
               selectJobType: selectJobType,
               selectedJobType: selectedJobType,
             ),
-
-            SizedBox(height: 16),
-            ElevatedButton(
-              onPressed: () {
-                showModalBottomSheet(
-                  context: context,
-                  builder: (BuildContext context) {
-                    return BottomSheetContent(
-                      selectedJobType: selectedJobType,
-                      selectJobType: selectJobType,
-                    );
-                  },
-                );
-              },
-              child: Text('Show bottom sheet'),
-            ),
           ],
         ),
-      ),
-    );
-  }
-}
-
-class BottomSheetContent extends StatelessWidget {
-  final String selectedJobType;
-  final Function(String) selectJobType;
-
-  BottomSheetContent({required this.selectedJobType, required this.selectJobType});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(16.0),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
-      ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Text(
-            'On-Site/Remote',
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-          ),
-          SizedBox(height: 16),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              GestureDetector(
-                onTap: () {
-                  selectJobType('Remote');
-                  Navigator.pop(context);
-                },
-                child: JobTypeChip(
-                  label: 'Remote',
-                  isSelected: selectedJobType == 'Remote',
-                ),
-              ),
-              GestureDetector(
-                onTap: () {
-                  selectJobType('Onsite');
-                  Navigator.pop(context);
-                },
-                child: JobTypeChip(
-                  label: 'Onsite',
-                  isSelected: selectedJobType == 'Onsite',
-                ),
-              ),
-              GestureDetector(
-                onTap: () {
-                  selectJobType('Hybrid');
-                  Navigator.pop(context);
-                },
-                child: JobTypeChip(
-                  label: 'Hybrid',
-                  isSelected: selectedJobType == 'Hybrid',
-                ),
-              ),
-              GestureDetector(
-                onTap: () {
-                  selectJobType('Any');
-                  Navigator.pop(context);
-                },
-                child: JobTypeChip(
-                  label: 'Any',
-                  isSelected: selectedJobType == 'Any',
-                ),
-              ),
-            ],
-          ),
-          SizedBox(height: 16),
-          ElevatedButton(
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            child: Text(
-              'Show result',
-              style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.w500),
-            ),
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.blue,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20),
-              ),
-              padding: EdgeInsets.symmetric(horizontal: 32, vertical: 12),
-            ),
-          ),
-        ],
       ),
     );
   }
@@ -399,98 +297,109 @@ class _JobCardState extends State<JobCard> {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      margin: EdgeInsets.symmetric(vertical: 8.0),
-      child: Padding(
-        padding: EdgeInsets.all(8.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                Image.asset(
-                  widget.companyLogo,
-                  width: 40,
-                  height: 40,
-                ),
-                SizedBox(width: 8.0),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      widget.jobTitle,
-                      style: TextStyle(
-                        fontSize: 16.0,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    Text(
-                      '${widget.companyName} • ${widget.location}',
-                      style: TextStyle(
-                        fontSize: 12.0,
-                        color: Colors.grey,
-                      ),
-                    ),
-                  ],
-                ),
-                Spacer(),
-                Column(
-                  children: [
-                    GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          isBookmarked = !isBookmarked;
-                        });
-                      },
-                      child: Container(
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: isBookmarked ? Colors.blue : Colors.transparent,
-                        ),
-                        padding: EdgeInsets.all(8.0),
-                        child: Icon(
-                          Icons.bookmark_border,
-                          color: isBookmarked ? Colors.white : Color(0xff111827),
+    return InkWell(
+      onTap: () {
+        // التنقل إلى صفحة ApplyJobView عند الضغط على JobCard
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => ApplyJobView(),
+          ),
+        );
+      },
+      child: Card(
+        margin: EdgeInsets.symmetric(vertical: 8.0),
+        child: Padding(
+          padding: EdgeInsets.all(8.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  Image.asset(
+                    widget.companyLogo,
+                    width: 40,
+                    height: 40,
+                  ),
+                  SizedBox(width: 8.0),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        widget.jobTitle,
+                        style: TextStyle(
+                          fontSize: 16.0,
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
-                    ),
-                    Text(
-                      widget.salary,
-                      style: TextStyle(
-                        fontSize: 14.0,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.green,
+                      Text(
+                        '${widget.companyName} • ${widget.location}',
+                        style: TextStyle(
+                          fontSize: 12.0,
+                          color: Colors.grey,
+                        ),
                       ),
+                    ],
+                  ),
+                  Spacer(),
+                  Column(
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            isBookmarked = !isBookmarked;
+                          });
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: isBookmarked ? Colors.blue : Colors.transparent,
+                          ),
+                          padding: EdgeInsets.all(8.0),
+                          child: Icon(
+                            Icons.bookmark_border,
+                            color: isBookmarked ? Colors.white : Color(0xff111827),
+                          ),
+                        ),
+                      ),
+                      Text(
+                        widget.salary,
+                        style: TextStyle(
+                          fontSize: 14.0,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.green,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+              SizedBox(height: 8.0),
+              Row(
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      widget.selectJobType(widget.jobType1);
+                    },
+                    child: JobTypeChip(
+                      label: widget.jobType1,
+                      isSelected: widget.selectedJobType == widget.jobType1,
                     ),
-                  ],
-                ),
-              ],
-            ),
-            SizedBox(height: 8.0),
-            Row(
-              children: [
-                GestureDetector(
-                  onTap: () {
-                    widget.selectJobType(widget.jobType1);
-                  },
-                  child: JobTypeChip(
-                    label: widget.jobType1,
-                    isSelected: widget.selectedJobType == widget.jobType1,
                   ),
-                ),
-                SizedBox(width: 8.0),
-                GestureDetector(
-                  onTap: () {
-                    widget.selectJobType(widget.jobType2);
-                  },
-                  child: JobTypeChip(
-                    label: widget.jobType2,
-                    isSelected: widget.selectedJobType == widget.jobType2,
+                  SizedBox(width: 8.0),
+                  GestureDetector(
+                    onTap: () {
+                      widget.selectJobType(widget.jobType2);
+                    },
+                    child: JobTypeChip(
+                      label: widget.jobType2,
+                      isSelected: widget.selectedJobType == widget.jobType2,
+                    ),
                   ),
-                ),
-              ],
-            ),
-          ],
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );

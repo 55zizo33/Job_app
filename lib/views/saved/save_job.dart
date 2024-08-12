@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:jobs_app/views/apply_job/message.dart';
+import 'package:jobs_app/views/home_screen/search.dart';
+import 'package:jobs_app/views/profile_setting/profile.dart';
+import 'package:jobs_app/views/saved/empety_state.dart';
+import 'package:jobs_app/views/saved/notification.dart';
+import 'package:jobs_app/views/messages/message2.dart';
+import 'package:jobs_app/views/saved/notification2.dart';
 
 class SaveJob extends StatefulWidget {
   const SaveJob({super.key});
@@ -28,7 +33,7 @@ class _SaveJobState extends State<SaveJob> {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => MessageView()),
+                    MaterialPageRoute(builder: (context) => SearchView()), // Navigate to EmpetyState
                   );
                 },
               ),
@@ -171,6 +176,26 @@ class _SaveJobState extends State<SaveJob> {
         onTap: (index) {
           setState(() {
             _currentIndex = index;
+            if (index == 0) {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => SearchView()), // Navigate to Home (SearchView)
+              );
+            } else if (index == 1) {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => Message2()), // Navigate to Messages (Message2)
+              );
+            } else if (index == 2) {
+              // Navigate to Applied
+            } else if (index == 3) {
+              // Already on Saved
+            } else if (index == 4) {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => Profile()), // Navigate to Profile
+              );
+            }
             print('Selected index: $_currentIndex');
           });
         },
@@ -207,43 +232,82 @@ class _SaveJobState extends State<SaveJob> {
                     showModalBottomSheet(
                       context: context,
                       builder: (BuildContext context) {
-                        return Container(
-                          padding: EdgeInsets.symmetric(vertical: 16.0),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              ListTile(
-                                leading: Icon(Icons.work),
+                        return Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Container(
+                              margin: EdgeInsets.all(8.0),
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(30.0),
+                                border: Border.all(color: Colors.grey, width: 0.5),
+                              ),
+                              child: ListTile(
+                                leading: SvgPicture.asset(
+                                  'assets/svg/directbox-notif.svg',
+                                  width: 24,
+                                  height: 24,
+                                ),
                                 title: Text('Apply Job'),
+                                trailing: Icon(Icons.arrow_forward_ios, size: 16),
                                 onTap: () {
                                   Navigator.pop(context);
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(content: Text('Apply Job clicked')),
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(builder: (context) => NotificationView()), // Navigate to NotificationView
                                   );
                                 },
                               ),
-                              ListTile(
-                                leading: Icon(Icons.share),
+                            ),
+                            Container(
+                              margin: EdgeInsets.all(8.0),
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(30.0),
+                                border: Border.all(color: Colors.grey, width: 0.5),
+                              ),
+                              child: ListTile(
+                                leading: SvgPicture.asset(
+                                  'assets/svg/export.svg',
+                                  width: 24,
+                                  height: 24,
+                                ),
                                 title: Text('Share via...'),
+                                trailing: Icon(Icons.arrow_forward_ios, size: 16),
                                 onTap: () {
                                   Navigator.pop(context);
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(content: Text('Share via clicked')),
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(builder: (context) => Notification2()), // Navigate to Notification2
                                   );
                                 },
                               ),
-                              ListTile(
-                                leading: Icon(Icons.cancel),
+                            ),
+                            Container(
+                              margin: EdgeInsets.all(8.0),
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(30.0),
+                                border: Border.all(color: Colors.grey, width: 0.5),
+                              ),
+                              child: ListTile(
+                                leading: SvgPicture.asset(
+                                  'assets/svg/archive-minus.svg',
+                                  width: 24,
+                                  height: 24,
+                                ),
                                 title: Text('Cancel save'),
+                                trailing: Icon(Icons.arrow_forward_ios, size: 16),
                                 onTap: () {
                                   Navigator.pop(context);
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(content: Text('Cancel save clicked')),
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(builder: (context) => EmpetyState()), // Navigate to EmpetyState
                                   );
                                 },
                               ),
-                            ],
-                          ),
+                            ),
+                          ],
                         );
                       },
                     );

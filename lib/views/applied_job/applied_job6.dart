@@ -1,8 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:jobs_app/views/applied_job/applied_job5.dart';
+import 'package:jobs_app/views/applied_job/applied_job7.dart';
 
-class AppliedJob6 extends StatelessWidget {
+class AppliedJob6 extends StatefulWidget {
   const AppliedJob6({super.key});
+
+  @override
+  _AppliedJob6State createState() => _AppliedJob6State();
+}
+
+class _AppliedJob6State extends State<AppliedJob6> {
+  int selectedJobOptionIndex = -1; // Index of the selected job option
 
   @override
   Widget build(BuildContext context) {
@@ -61,16 +69,16 @@ class AppliedJob6 extends StatelessWidget {
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(8.0),
-                border: Border.all(color: Colors.white!),
+                border: Border.all(color: Colors.white),
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   stepContainer('1', 'Biodata', true, Colors.blue),
                   Text('-----', style: TextStyle(color: Colors.blue)),
-                  stepContainer('2', 'Type of work', false, Color(0xFF3366FF)),
+                  stepContainer('2', 'Type of work', true, Colors.blue),
                   Text('-----', style: TextStyle(color: Colors.grey)),
-                  stepContainer('3', 'Upload portfolio', false, Color(0xFF9CA3AF)),
+                  stepContainer('3', 'Upload portfolio', false, Colors.grey),
                 ],
               ),
             ),
@@ -90,13 +98,13 @@ class AppliedJob6 extends StatelessWidget {
               ),
             ),
             SizedBox(height: 28),
-            jobOption('Senior UX Designer', 'CV.pdf • Portfolio.pdf', false),
+            jobOption(0, 'Senior UX Designer', 'CV.pdf • Portfolio.pdf'),
             SizedBox(height: 10,),
-            jobOption('Senior UI Designer', 'CV.pdf • Portfolio.pdf', true),
+            jobOption(1, 'Senior UI Designer', 'CV.pdf • Portfolio.pdf'),
             SizedBox(height: 10,),
-            jobOption('Graphik Designer', 'CV.pdf • Portfolio.pdf', false),
+            jobOption(2, 'Graphik Designer', 'CV.pdf • Portfolio.pdf'),
             SizedBox(height: 10,),
-            jobOption('Front-End Developer', 'CV.pdf • Portfolio.pdf', false),
+            jobOption(3, 'Front-End Developer', 'CV.pdf • Portfolio.pdf'),
             SizedBox(height: 30),
             Center(
               child: SizedBox(
@@ -104,12 +112,15 @@ class AppliedJob6 extends StatelessWidget {
                 height: 48,
                 child: ElevatedButton(
                   onPressed: () {
-                    // Add your onPressed code here!
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => ApplyJob7View()),
+                    );
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.blue,
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(24.0), // نصف الارتفاع لجعل الزر بيضاوي
+                      borderRadius: BorderRadius.circular(24.0),
                     ),
                   ),
                   child: Text(
@@ -164,36 +175,40 @@ class AppliedJob6 extends StatelessWidget {
     );
   }
 
-  Widget jobOption(String title, String subtitle, bool isSelected) {
-    return Container(
-      margin: const EdgeInsets.only(bottom: 16.0),
-      decoration: BoxDecoration(
-        color: isSelected ? Colors.blue[50] : Colors.white,
-        borderRadius: BorderRadius.circular(8.0),
-        border: Border.all(color: isSelected ? Colors.blue : Colors.grey[300]!),
-      ),
-      child: ListTile(
-        title: Text(
-          title,
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-          ),
+  Widget jobOption(int index, String title, String subtitle) {
+    bool isSelected = selectedJobOptionIndex == index;
+
+    return GestureDetector(
+      onTap: () {
+        setState(() {
+          selectedJobOptionIndex = index;
+        });
+      },
+      child: Container(
+        margin: const EdgeInsets.only(bottom: 16.0),
+        decoration: BoxDecoration(
+          color: isSelected ? Colors.blue[50] : Colors.white,
+          borderRadius: BorderRadius.circular(8.0),
+          border: Border.all(color: isSelected ? Colors.blue : Colors.grey[300]!),
         ),
-        subtitle: Text(
-          subtitle,
-          style: TextStyle(
-            color: Colors.grey,
+        child: ListTile(
+          title: Text(
+            title,
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+            ),
           ),
+          subtitle: Text(
+            subtitle,
+            style: TextStyle(
+              color: Colors.grey,
+            ),
+          ),
+          trailing: isSelected
+              ? Icon(Icons.radio_button_checked, color: Colors.blue)
+              : Icon(Icons.radio_button_off, color: Colors.grey),
         ),
-        trailing: isSelected
-            ? Icon(Icons.radio_button_checked, color: Colors.blue)
-            : Icon(Icons.radio_button_off, color: Colors.grey),
-        onTap: () {
-          // Add your onTap code here!
-        },
       ),
     );
   }
 }
-
-

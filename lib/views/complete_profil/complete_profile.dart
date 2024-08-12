@@ -1,22 +1,42 @@
 import 'package:flutter/material.dart';
 import 'package:jobs_app/views/applied_job/applied_job8.dart';
+import 'package:jobs_app/views/complete_profil/personal_details.dart';
+import 'package:jobs_app/views/complete_profil/education.dart';
+import 'package:jobs_app/views/complete_profil/experience.dart';
+import 'package:jobs_app/views/profile_setting/portfolio.dart';
 
-class CompleteProfile extends StatelessWidget {
+class CompleteProfile extends StatefulWidget {
   const CompleteProfile({super.key});
+
+  @override
+  _CompleteProfileState createState() => _CompleteProfileState();
+}
+
+class _CompleteProfileState extends State<CompleteProfile> {
+  double completionPercentage = 0.0;
+  int completedSteps = 0;
+
+  void _incrementCompletion() {
+    setState(() {
+      completedSteps++;
+      completionPercentage = (completedSteps / 4) * 100;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-            onPressed: () {
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(builder: (context) => AppliedJob8()),
-              );
-            },
-            icon: Icon(Icons.arrow_back),
-            color: Colors.black),
+          onPressed: () {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => AppliedJob8()),
+            );
+          },
+          icon: Icon(Icons.arrow_back),
+          color: Colors.black,
+        ),
         titleSpacing: 50,
         title: Text('Complete Profile'),
       ),
@@ -32,14 +52,14 @@ class CompleteProfile extends StatelessWidget {
                     width: 100,
                     height: 100,
                     child: CircularProgressIndicator(
-                      value: 0.5,
+                      value: completionPercentage / 100,
                       strokeWidth: 10,
                       backgroundColor: Colors.grey[200],
                       valueColor: AlwaysStoppedAnimation<Color>(Colors.blue),
                     ),
                   ),
                   Text(
-                    '50%',
+                    '${completionPercentage.toInt()}%',
                     style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
@@ -50,10 +70,16 @@ class CompleteProfile extends StatelessWidget {
               ),
             ),
             SizedBox(height: 8),
-            Text('2/4 Completed'),
+            Text(
+              '${(completionPercentage / 100 * 4).toInt()}/4 Completed',
+              style: TextStyle(
+                fontSize: 16,
+                color: Colors.black,
+              ),
+            ),
             SizedBox(height: 16),
             Padding(
-              padding: const EdgeInsets.only(left: 30,right: 30),
+              padding: const EdgeInsets.only(left: 30, right: 30),
               child: Text(
                 'Complete your profile before applying for a job',
                 style: TextStyle(fontSize: 16),
@@ -66,29 +92,49 @@ class CompleteProfile extends StatelessWidget {
                   ProfileStep(
                     title: 'Personal Details',
                     subtitle: 'Full name, email, phone number, and your address',
-                    isCompleted: true,
-                    color: Color(0xFF84A9FF).withOpacity(.4),
+                    onTap: () {
+                      _incrementCompletion();
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => PersonalDetails()),
+                      );
+                    },
                   ),
-                  SizedBox(height: 20,),
+                  SizedBox(height: 20),
                   ProfileStep(
                     title: 'Education',
                     subtitle: 'Enter your educational history to be considered by the recruiter',
-                    isCompleted: true,
-                    color: Color(0xFF84A9FF).withOpacity(.4),
+                    onTap: () {
+                      _incrementCompletion();
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => Education()),
+                      );
+                    },
                   ),
-                  SizedBox(height: 20,),
+                  SizedBox(height: 20),
                   ProfileStep(
                     title: 'Experience',
                     subtitle: 'Enter your work experience to be considered by the recruiter',
-                    isCompleted: false,
-                    color: Colors.white,
+                    onTap: () {
+                      _incrementCompletion();
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => Experience()),
+                      );
+                    },
                   ),
-                  SizedBox(height: 20,),
+                  SizedBox(height: 20),
                   ProfileStep(
                     title: 'Portfolio',
                     subtitle: 'Create your portfolio. Applying for various types of jobs is easier.',
-                    isCompleted: false,
-                    color: Colors.white,
+                    onTap: () {
+                      _incrementCompletion();
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => Portfolio()),
+                      );
+                    },
                   ),
                 ],
               ),
@@ -100,66 +146,81 @@ class CompleteProfile extends StatelessWidget {
   }
 }
 
-class ProfileStep extends StatelessWidget {
+class ProfileStep extends StatefulWidget {
   final String title;
   final String subtitle;
-  final bool isCompleted;
-  final Color color;
+  final VoidCallback? onTap;
 
   const ProfileStep({
     required this.title,
     required this.subtitle,
-    required this.isCompleted,
-    required this.color,
+    this.onTap,
   });
 
   @override
+  _ProfileStepState createState() => _ProfileStepState();
+}
+
+class _ProfileStepState extends State<ProfileStep> {
+  bool isPressed = false;
+
+  @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.symmetric(vertical: 8),
-      padding: EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: color,
-        borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: Colors.grey[300]!),
-      ),
-      child: Row(
-        children: [
-          Icon(
-            Icons.check_circle,
-            color: isCompleted ? Colors.blue : Colors.grey,
-          ),
-          SizedBox(width: 16),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  title,
-                  style: TextStyle(
-                    color: Color(0xFF111827),
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                SizedBox(height: 4),
-                Text(
-                  subtitle,
-                  style: TextStyle(
-                    color: Colors.black54,
-                    fontSize: 14,
-                  ),
-                ),
-              ],
+    return GestureDetector(
+      onTap: () {
+        setState(() {
+          isPressed = true;
+        });
+        widget.onTap?.call();
+      },
+      child: Container(
+        margin: EdgeInsets.symmetric(vertical: 8),
+        padding: EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          color: isPressed ? Color(0xFF84A9FF) : Colors.white,
+          borderRadius: BorderRadius.circular(8),
+          border: Border.all(color: Colors.grey[300]!),
+        ),
+        child: Row(
+          children: [
+            Icon(
+              Icons.check_circle,
+              color: isPressed ? Colors.blue : Colors.grey,
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(right: 10,left: 10),
-            child: Icon(Icons.arrow_forward),
-          ),
-        ],
+            SizedBox(width: 16),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    widget.title,
+                    style: TextStyle(
+                      color: Color(0xFF111827),
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  SizedBox(height: 4),
+                  Text(
+                    widget.subtitle,
+                    style: TextStyle(
+                      color: Colors.black54,
+                      fontSize: 14,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(right: 10, left: 10),
+              child: Icon(
+                Icons.arrow_forward,
+                color: isPressed ? Colors.blue : Colors.grey,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
 }
-

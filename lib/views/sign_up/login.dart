@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:jobs_app/views/forgot_password/password.dart';
+import 'package:jobs_app/views/home_screen/search.dart';
 
 class LoginView extends StatefulWidget {
   @override
@@ -74,8 +75,9 @@ class _LoginViewState extends State<LoginView> {
   }
 
   void _forgotPassword() {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('Forgot Password tapped')),
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => PasswordView()),
     );
   }
 
@@ -228,7 +230,7 @@ class _LoginViewState extends State<LoginView> {
                         });
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => PasswordView()),
+                          MaterialPageRoute(builder: (context) => SearchView()),
                         );
                       } else {
                         String message = 'Please complete all fields correctly';
