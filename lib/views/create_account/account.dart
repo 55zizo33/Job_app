@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:jobs_app/views/create_account/working.dart';
+import 'package:jobs_app/views/sign_up/login.dart';
 
 class CreateAccount extends StatefulWidget {
   @override
@@ -197,7 +198,12 @@ class _CreateAccountState extends State<CreateAccount> {
                   children: [
                     Text('Already have an account?'),
                     TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => LoginView()), // هنا يتم التوجيه إلى صفحة LoginView
+                        );
+                      },
                       child: Text('Login', style: TextStyle(color: Colors.blue)),
                     ),
                   ],
@@ -205,7 +211,6 @@ class _CreateAccountState extends State<CreateAccount> {
                 SizedBox(height: 16),
                 Center(
                   child: ElevatedButton(
-
                     onPressed: _isFormValid
                         ? () {
                       Navigator.push(
@@ -298,5 +303,3 @@ class _CreateAccountState extends State<CreateAccount> {
     );
   }
 }
-
-

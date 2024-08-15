@@ -1,12 +1,17 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:jobs_app/views/create_account/account.dart';
+import 'package:jobs_app/views/on_boarding/onboarding.dart';
+import 'package:jobs_app/views/on_boarding/onboarding2.dart';
 import 'package:jobs_app/views/on_boarding/splash.dart';
 import 'package:jobs_app/views/profile_setting/Portfolio.dart';
 import 'package:jobs_app/views/profile_setting/edite_profile.dart';
 import 'package:jobs_app/views/profile_setting/language.dart';
 import 'package:jobs_app/views/profile_setting/login_security.dart';
 import 'package:jobs_app/views/profile_setting/notification3.dart';
+import 'package:jobs_app/views/profile_setting/profile.dart';
+import 'package:jobs_app/views/sign_up/login.dart';
 import 'core/app_theme.dart';
 import 'core/logic/cache_helper.dart';
 import 'core/logic/helper_methods.dart';
@@ -46,7 +51,7 @@ class _MyAppState extends State<MyApp> {
         supportedLocales: context.supportedLocales,
         locale: context.locale,
         debugShowCheckedModeBanner: false,
-        home: SplashView(),
+        home: Profile(),
         routes: {
           '/edit_profile': (context) => EditProfile(),
           '/portfolio': (context) => Portfolio(),

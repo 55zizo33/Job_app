@@ -4,6 +4,7 @@ import 'package:jobs_app/views/complete_profil/personal_details.dart';
 import 'package:jobs_app/views/complete_profil/education.dart';
 import 'package:jobs_app/views/complete_profil/experience.dart';
 import 'package:jobs_app/views/profile_setting/portfolio.dart';
+import 'package:jobs_app/views/profile_setting/profile.dart';
 
 class CompleteProfile extends StatefulWidget {
   const CompleteProfile({super.key});
@@ -31,7 +32,7 @@ class _CompleteProfileState extends State<CompleteProfile> {
           onPressed: () {
             Navigator.pushReplacement(
               context,
-              MaterialPageRoute(builder: (context) => AppliedJob8()),
+              MaterialPageRoute(builder: (context) => Profile()),
             );
           },
           icon: Icon(Icons.arrow_back),

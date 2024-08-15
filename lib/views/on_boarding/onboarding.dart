@@ -72,29 +72,29 @@ class OnboardingScreen extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Container(
-                        width: 6,
-                        height: 6,
-                        margin: EdgeInsets.symmetric(horizontal: 4),
-                        decoration: BoxDecoration(
-                          color: Color(0xffADC8FF),
-                          borderRadius: BorderRadius.circular(4),
-                        ),
-                      ),
-                      Container(
-                        width: 6,
-                        height: 6,
-                        margin: EdgeInsets.symmetric(horizontal: 4),
-                        decoration: BoxDecoration(
-                          color: Color(0xffADC8FF),
-                          borderRadius: BorderRadius.circular(4),
-                        ),
-                      ),
-                      Container(
-                        width: 8,
+                        width: 8, // تكبير حجم الدائرة الزرقاء
                         height: 8,
                         margin: EdgeInsets.symmetric(horizontal: 4),
                         decoration: BoxDecoration(
-                          color: Color(0xff3366FF),
+                          color: Color(0xff3366FF), // تغيير لون الدائرة للأزرق
+                          borderRadius: BorderRadius.circular(4),
+                        ),
+                      ),
+                      Container(
+                        width: 6,
+                        height: 6,
+                        margin: EdgeInsets.symmetric(horizontal: 4),
+                        decoration: BoxDecoration(
+                          color: Color(0xffADC8FF), // الدائرة الثانية تظل كما هي
+                          borderRadius: BorderRadius.circular(4),
+                        ),
+                      ),
+                      Container(
+                        width: 6,
+                        height: 6,
+                        margin: EdgeInsets.symmetric(horizontal: 4),
+                        decoration: BoxDecoration(
+                          color: Color(0xffADC8FF), // الدائرة الثالثة تظل كما هي
                           borderRadius: BorderRadius.circular(4),
                         ),
                       ),

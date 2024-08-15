@@ -208,7 +208,7 @@ class _LoginViewState extends State<LoginView> {
                     ),
                   ],
                 ),
-                SizedBox(height: 170),
+                SizedBox(height: 125),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
