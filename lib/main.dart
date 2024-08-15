@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:jobs_app/views/create_account/account.dart';
+import 'package:jobs_app/views/home_screen/search.dart';
 import 'package:jobs_app/views/on_boarding/onboarding.dart';
 import 'package:jobs_app/views/on_boarding/onboarding2.dart';
 import 'package:jobs_app/views/on_boarding/splash.dart';
@@ -51,7 +52,7 @@ class _MyAppState extends State<MyApp> {
         supportedLocales: context.supportedLocales,
         locale: context.locale,
         debugShowCheckedModeBanner: false,
-        home: Profile(),
+        home: SplashView(),
         routes: {
           '/edit_profile': (context) => EditProfile(),
           '/portfolio': (context) => Portfolio(),
