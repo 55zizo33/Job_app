@@ -6,8 +6,8 @@ class Job {
   final String image;
   final String location;
   final int salary;
-  final String jobDescription; // أضف هذا الحقل
-  final String jobSkill; // أضف هذا الحقل
+  final String jobDescription;
+  final String jobSkill;
 
   Job({
     required this.id,
@@ -30,8 +30,8 @@ class Job {
       image: json['image'] ?? '',
       location: json['location'] ?? '',
       salary: int.tryParse(json['salary'].toString()) ?? 0,
-      jobDescription: json['job_description'] ?? '', // أضف هذا الحقل
-      jobSkill: json['job_skill'] ?? '', // أضف هذا الحقل
+      jobDescription: json['job_description'] ?? '',
+      jobSkill: json['job_skill'] ?? '',
     );
   }
 
@@ -44,8 +44,8 @@ class Job {
       'image': image,
       'location': location,
       'salary': salary,
-      'job_description': jobDescription, // أضف هذا الحقل
-      'job_skill': jobSkill, // أضف هذا الحقل
+      'job_description': jobDescription,
+      'job_skill': jobSkill,
     };
   }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:jobs_app/views/apply_job/accepted.dart';
 import 'package:jobs_app/views/messages/message2.dart';
 import 'package:jobs_app/views/saved/save_job.dart';
 
@@ -17,7 +18,7 @@ class MessageView extends StatelessWidget {
           onPressed: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => Message2()),
+              MaterialPageRoute(builder: (context) => Accepted()),
             );
           },
         ),

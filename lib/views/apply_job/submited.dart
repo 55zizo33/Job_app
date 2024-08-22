@@ -14,6 +14,13 @@ class _SubmitedViewState extends State<SubmitedView> {
   String applicationStatus = 'Submitted'; // متغير لتخزين حالة الطلب
 
   @override
+  void initState() {
+    super.initState();
+
+
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(

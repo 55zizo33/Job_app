@@ -2,14 +2,54 @@ import 'dart:ui';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:dio/dio.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:jobs_app/views/forgot_password/password_2.dart';
 import 'package:jobs_app/views/sign_up/login.dart';
 
 class PasswordView extends StatelessWidget {
   const PasswordView({super.key});
 
+  Future<void> _sendOtpRequest(BuildContext context, String email) async {
+    try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      String? token = prefs.getString('token');
+
+      final Dio dio = Dio();
+      dio.options.headers["Authorization"] = "Bearer $token";
+
+      final response = await dio.post(
+        'https://project2.amit-learning.com/api/auth/otp',
+        data: FormData.fromMap({
+          'email': email,
+        }),
+      );
+
+      if (response.statusCode == 200) {
+        String otpData = response.data['data'];
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('OTP request successful: $otpData')),
+        );
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => ForgetPassword2()),
+        );
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Failed to send OTP: ${response.statusMessage}')),
+        );
+      }
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Error during OTP request: $e')),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    final TextEditingController _emailController = TextEditingController();
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -58,7 +98,27 @@ class PasswordView extends StatelessWidget {
                   style: TextStyle(color: Colors.grey),
                 ),
                 SizedBox(height: 40),
-                EmailTextField(),
+                TextField(
+                  controller: _emailController,
+                  decoration: InputDecoration(
+                    filled: true,
+                    fillColor: Color(0xFFD1D5DB).withOpacity(.1),
+                    prefixIcon: Padding(
+                      padding: const EdgeInsets.all(12.0),
+                      child: SvgPicture.asset(
+                        "assets/svg/sms.svg",
+                        color: Colors.black.withOpacity(.1),
+                        fit: BoxFit.scaleDown,
+                      ),
+                    ),
+                    hintText: 'Enter your email...',
+                    hintStyle: TextStyle(color: Colors.black.withOpacity(0.1)),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: BorderSide(color: Color(0xFFD1D5DB), width: 20.0),
+                    ),
+                  ),
+                ),
                 SizedBox(height: 320),
                 Center(
                   child: RichText(
@@ -94,10 +154,14 @@ class PasswordView extends StatelessWidget {
                     width: 327,
                     child: ElevatedButton(
                       onPressed: () {
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(builder: (context) => ForgetPassword2()), // تغيير هنا
-                        );
+                        final email = _emailController.text;
+                        if (email.isNotEmpty) {
+                          _sendOtpRequest(context, email);
+                        } else {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text('Please enter your email')),
+                          );
+                        }
                       },
                       style: ElevatedButton.styleFrom(
                         padding: EdgeInsets.symmetric(vertical: 20),
@@ -114,61 +178,10 @@ class PasswordView extends StatelessWidget {
                     ),
                   ),
                 ),
-                SizedBox(height: 9), // تعديل المسافة إلى 9
+                SizedBox(height: 9),
               ],
             ),
           ),
-        ),
-      ),
-    );
-  }
-}
-
-class EmailTextField extends StatefulWidget {
-  @override
-  _EmailTextFieldState createState() => _EmailTextFieldState();
-}
-
-class _EmailTextFieldState extends State<EmailTextField> {
-  final FocusNode _focusNode = FocusNode();
-  Color _iconColor = Colors.black.withOpacity(.1);
-
-  @override
-  void initState() {
-    super.initState();
-    _focusNode.addListener(() {
-      setState(() {
-        _iconColor = _focusNode.hasFocus ? Color(0xFF292D32) : Colors.black.withOpacity(.1);
-      });
-    });
-  }
-
-  @override
-  void dispose() {
-    _focusNode.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return TextField(
-      focusNode: _focusNode,
-      decoration: InputDecoration(
-        filled: true,
-        fillColor: Color(0xFFD1D5DB).withOpacity(.1),
-        prefixIcon: Padding(
-          padding: const EdgeInsets.all(12.0),
-          child: SvgPicture.asset(
-            "assets/svg/sms.svg",
-            color: _iconColor,
-            fit: BoxFit.scaleDown,
-          ),
-        ),
-        hintText: 'Enter your email...',
-        hintStyle: TextStyle(color: Colors.black.withOpacity(0.1)),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: BorderSide(color: Color(0xFFD1D5DB), width: 20.0),
         ),
       ),
     );

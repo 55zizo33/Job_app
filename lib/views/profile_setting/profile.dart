@@ -2,15 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:jobs_app/views/complete_profil/complete_profile.dart';
 import 'package:jobs_app/views/home_screen/search.dart';
-import 'package:jobs_app/views/on_boarding/splash.dart';
 import 'package:jobs_app/views/sign_up/login.dart';
 import 'terms.dart';
 import 'privacy_policy.dart';
 import 'help_center.dart';
+import 'package:jobs_app/core/logic/dio_helper.dart';
 
-class Profile extends StatelessWidget {
+
+class Profile extends StatefulWidget {
   const Profile({super.key});
 
+  @override
+  State<Profile> createState() => _ProfileState();
+}
+
+class _ProfileState extends State<Profile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

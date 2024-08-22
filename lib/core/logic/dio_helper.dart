@@ -10,7 +10,7 @@ class DioHelper {
 
   final Dio _dio = Dio(
     BaseOptions(
-      baseUrl: "https://jobs.amr.aait-d.com/api/", // تأكد من تحديث URL القاعدة هنا
+      baseUrl: "https://project2.amit-learning.com/api/auth/profile", // تأكد من تحديث URL القاعدة هنا
       headers: {"Accept": "application/json"},
     ),
   );
@@ -71,7 +71,7 @@ class AppInterceptor extends Interceptor {
     log.fine("Query Parameters: ${options.queryParameters}");
     options.headers.putIfAbsent(
       "Authorization",
-          () => "Bearer ${CacheHelper.token}",
+          () => "Bearer 13261|ZdNcfacUH7CSBGvm3DEYfxwRWV6dQcsCSl6tBsw2",
     );
     log.fine("*" * 30);
     super.onRequest(options, handler);

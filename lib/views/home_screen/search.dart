@@ -3,11 +3,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:jobs_app/views/applied_job/applied_job4.dart';
+import 'package:jobs_app/views/apply_job/apply_job1.dart';
+import 'package:jobs_app/views/apply_job/job_detail.dart';
 import 'package:jobs_app/views/home_screen/search_2.dart';
 import 'package:jobs_app/views/messages/message2.dart';
 import 'package:jobs_app/views/saved/save_job.dart';
 import 'package:jobs_app/views/profile_setting/profile.dart';
-import 'package:jobs_app/views/sign_up/login.dart';
 
 class SearchView extends StatefulWidget {
   @override
@@ -24,15 +25,6 @@ class _SearchViewState extends State<SearchView> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Colors.black), // إضافة أيقونة السهم
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => LoginView()), // التوجيه لصفحة تسجيل الدخول عند الضغط على السهم
-            );
-          },
-        ),
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -227,8 +219,10 @@ class _SearchViewState extends State<SearchView> {
                           ),
                           ElevatedButton(
                             onPressed: () {
-                              print('Apply now pressed');
-                            },
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => JobDetailView()), // التأكد من استدعاء الصفحة الصحيحة
+                              );                            },
                             style: ElevatedButton.styleFrom(
                               backgroundColor: Color(0xff3366FF),
                               shape: RoundedRectangleBorder(

@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:dio/dio.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:jobs_app/views/forgot_password/password.dart';
 import 'package:jobs_app/views/home_screen/search.dart';
+import 'package:jobs_app/views/create_account/account.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 
 class LoginView extends StatefulWidget {
   @override
@@ -22,10 +26,12 @@ class _LoginViewState extends State<LoginView> {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
+  final Dio _dio = Dio();
+
   void _validateForm() {
     setState(() {
-      _isFormValid = _usernameController.text == fixedUsername &&
-          _passwordController.text == fixedPassword;
+      _isFormValid = _usernameController.text.isNotEmpty &&
+          _passwordController.text.isNotEmpty;
     });
   }
 
@@ -74,6 +80,41 @@ class _LoginViewState extends State<LoginView> {
     }
   }
 
+  Future<void> _login() async {
+    try {
+      final response = await _dio.post(
+        'https://project2.amit-learning.com/api/auth/login',
+        data: {
+          'email': _usernameController.text,
+          'password': _passwordController.text,
+        },
+      );
+
+      if (response.statusCode == 200 && response.data['status'] == true) {
+        // Save token and user data to SharedPreferences
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        await prefs.setString('token', response.data['token']);
+        await prefs.setInt('user_id', response.data['user']['id']);
+        await prefs.setString('user_name', response.data['user']['name']);
+        await prefs.setString('user_email', response.data['user']['email']);
+
+        print("Login successful: ${response.data}");
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Login successful')),
+        );
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => SearchView()),
+        );
+      } else {
+        _showIncompleteFormMessage("Login failed: ${response.data['message']}");
+      }
+    } catch (e) {
+      print("Error during login: $e");
+      _showIncompleteFormMessage("Error during login: $e");
+    }
+  }
+
   void _forgotPassword() {
     Navigator.push(
       context,
@@ -87,7 +128,7 @@ class _LoginViewState extends State<LoginView> {
     );
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => PasswordView()),
+      MaterialPageRoute(builder: (context) => CreateAccount()),
     );
   }
 
@@ -145,7 +186,7 @@ class _LoginViewState extends State<LoginView> {
                         fit: BoxFit.scaleDown,
                       ),
                     ),
-                    hintText: 'Username',
+                    hintText: 'Email',
                     hintStyle: TextStyle(color: Colors.black),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
@@ -223,28 +264,21 @@ class _LoginViewState extends State<LoginView> {
                 Center(
                   child: ElevatedButton(
                     onPressed: () {
-                      _validateForm();
                       if (_isFormValid) {
-                        setState(() {
-                          _isButtonPressed = true;
-                        });
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => SearchView()),
-                        );
+                        _login();
                       } else {
                         String message = 'Please complete all fields correctly';
-                        if (_usernameController.text != fixedUsername) {
-                          message = 'Username is incorrect';
-                        } else if (_passwordController.text != fixedPassword) {
-                          message = 'Password is incorrect';
+                        if (_usernameController.text.isEmpty) {
+                          message = 'Username is required';
+                        } else if (_passwordController.text.isEmpty) {
+                          message = 'Password is required';
                         }
                         _showIncompleteFormMessage(message);
                       }
                     },
                     style: ElevatedButton.styleFrom(
                       minimumSize: Size(327, 50),
-                      backgroundColor: _isButtonPressed ? Colors.blue : (_isFormValid ? Colors.blue : Color(0xffD1D5DB)),
+                      backgroundColor: _isFormValid ? Colors.blue : Color(0xffD1D5DB),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(30),
                       ),

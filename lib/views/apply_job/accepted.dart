@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:jobs_app/views/home_screen/search.dart';
+import 'package:jobs_app/views/messages/message.dart';
 
 class Accepted extends StatefulWidget {
   @override
@@ -10,7 +11,14 @@ class Accepted extends StatefulWidget {
 
 class _AcceptedState extends State<Accepted> {
   int _currentIndex = 0;
-  bool isBookmarkPressed = false; // ده هيتابع لو الأيقونة مضغوط عليها ولا لأ
+  bool isBookmarkPressed = false;
+
+  @override
+  void initState() {
+    super.initState();
+
+    // توجيه تلقائي بعد 2 ثانية لصفحة المحادثة
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -377,5 +385,3 @@ class _AcceptedState extends State<Accepted> {
     );
   }
 }
-
-

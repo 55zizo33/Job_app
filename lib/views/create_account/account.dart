@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
+import 'package:dio/dio.dart';
 import 'package:jobs_app/views/create_account/working.dart';
 import 'package:jobs_app/views/sign_up/login.dart';
 
@@ -18,11 +19,14 @@ class _CreateAccountState extends State<CreateAccount> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
+  final Dio _dio = Dio();
+
   void _validateForm() {
     setState(() {
       _isFormValid = _usernameController.text.isNotEmpty &&
           _emailController.text.isNotEmpty &&
-          _passwordController.text.isNotEmpty;
+          _passwordController.text.isNotEmpty &&
+          _passwordController.text.length >= 8;
     });
   }
 
@@ -38,8 +42,42 @@ class _CreateAccountState extends State<CreateAccount> {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(message),
+        backgroundColor: Colors.red, // Customize color for error message
       ),
     );
+  }
+
+  Future<void> _register() async {
+    try {
+      final response = await _dio.post(
+        'https://project2.amit-learning.com/api/auth/register',
+        data: {
+          'name': _usernameController.text,
+          'email': _emailController.text,
+          'password': _passwordController.text,
+        },
+      );
+
+      if (response.statusCode == 200 && response.data['status'] == true) {
+        // Registration successful
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Registration successful')),
+        );
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => WorkingView()),
+        );
+      } else {
+        // Handle error message from the server
+        String errorMessage = 'Registration failed';
+        if (response.data['massege'] != null && response.data['massege']['email'] != null) {
+          errorMessage = response.data['massege']['email'].join(', ');
+        }
+        _showIncompleteFormMessage(errorMessage);
+      }
+    } catch (e) {
+      _showIncompleteFormMessage("Error during registration: $e");
+    }
   }
 
   Future<void> _loginWithGoogle() async {
@@ -59,13 +97,11 @@ class _CreateAccountState extends State<CreateAccount> {
           SnackBar(content: Text('Signed in with Facebook: ${userData['email']}')),
         );
       } else {
-        print("Facebook login failed: ${result.status}");
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('Facebook login failed: ${result.status}')),
         );
       }
     } catch (e) {
-      print("Error during Facebook login: $e");
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Error during Facebook login: $e')),
       );
@@ -159,7 +195,10 @@ class _CreateAccountState extends State<CreateAccount> {
                 TextField(
                   controller: _passwordController,
                   obscureText: _obscureText,
-                  onChanged: (value) => _validateForm(),
+                  onChanged: (value) {
+                    _validateForm();
+                    setState(() {});
+                  },
                   decoration: InputDecoration(
                     prefixIcon: Padding(
                       padding: const EdgeInsets.all(12.0),
@@ -190,7 +229,11 @@ class _CreateAccountState extends State<CreateAccount> {
                 SizedBox(height: 8),
                 Text(
                   'Password must be at least 8 characters',
-                  style: TextStyle(color: Colors.grey),
+                  style: TextStyle(
+                    color: _passwordController.text.length >= 8
+                        ? Colors.green
+                        : Colors.red,
+                  ),
                 ),
                 SizedBox(height: 80),
                 Row(
@@ -201,7 +244,7 @@ class _CreateAccountState extends State<CreateAccount> {
                       onPressed: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => LoginView()), // هنا يتم التوجيه إلى صفحة LoginView
+                          MaterialPageRoute(builder: (context) => LoginView()),
                         );
                       },
                       child: Text('Login', style: TextStyle(color: Colors.blue)),
@@ -213,11 +256,7 @@ class _CreateAccountState extends State<CreateAccount> {
                   child: ElevatedButton(
                     onPressed: _isFormValid
                         ? () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => WorkingView()),
-                      );
+                      _register();
                     }
                         : null,
                     style: ElevatedButton.styleFrom(

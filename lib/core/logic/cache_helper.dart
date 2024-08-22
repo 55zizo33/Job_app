@@ -12,7 +12,7 @@ class CacheHelper {
     print(isSuccess ? "Success" : "Failed");
   }
   static String get token {
-    return _prefs.getString("token") ?? "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczpcL1wvdGhpbWFyLmFtci5hYWl0LWQuY29tXC9hcGlcL2xvZ2luIiwiaWF0IjoxNzE3MDEwNzIzLCJleHAiOjE3NDg1NDY3MjMsIm5iZiI6MTcxNzAxMDcyMywianRpIjoibTNWT3ZxcWw3Z2dsSVRtdyIsInN1YiI6MzkwLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.elv6eFEsT08ohNRV_Mevo77MBk3wxKR8gSKBoUfD-SA";
+    return _prefs.getString("token") ?? "13261|ZdNcfacUH7CSBGvm3DEYfxwRWV6dQcsCSl6tBsw2";
   }
   static String get name {
     return _prefs.getString("name") ?? "";

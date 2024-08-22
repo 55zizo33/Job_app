@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:jobs_app/views/apply_job/apply_job1.dart';
+import 'package:jobs_app/views/apply_job/job_detail.dart';
 import 'package:jobs_app/views/home_screen/search.dart';
 import 'package:jobs_app/views/home_screen/search4.dart';
-import 'package:jobs_app/views/home_screen/search_2.dart';
 
 class Search3View extends StatefulWidget {
   const Search3View({super.key});
@@ -18,6 +18,91 @@ class _Search3ViewState extends State<Search3View> {
     setState(() {
       selectedJobType = jobType;
     });
+
+    // عرض الفلتر كـ Bottom Sheet
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      builder: (BuildContext context) {
+        return Container(
+          padding: EdgeInsets.all(16.0),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.2),
+                spreadRadius: 2,
+                blurRadius: 10,
+                offset: Offset(0, -2),
+              ),
+            ],
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                'On-Site/Remote',
+                style: TextStyle(
+                  fontSize: 18.0,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              SizedBox(height: 16.0),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  _buildOptionChip('Remote', selectedJobType == 'Remote'),
+                  _buildOptionChip('Onsite', selectedJobType == 'Onsite'),
+                  _buildOptionChip('Hybrid', selectedJobType == 'Hybrid'),
+                  _buildOptionChip('Any', selectedJobType == 'Any'),
+                ],
+              ),
+              SizedBox(height: 20.0),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.blue,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                ),
+                onPressed: () {
+                  Navigator.pop(context); // إغلاق الـ Bottom Sheet
+                },
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 80.0, vertical: 12.0),
+                  child: Text(
+                    'Show result',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 16.0,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _buildOptionChip(String label, bool isSelected) {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+      decoration: BoxDecoration(
+        color: isSelected ? Color(0xffD6E4FF) : Colors.white,
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: isSelected ? Color(0xff3366FF) : Colors.grey),
+      ),
+      child: Text(
+        label,
+        style: TextStyle(
+          color: isSelected ? Color(0xff3366FF) : Colors.grey,
+          fontSize: 14.0,
+        ),
+      ),
+    );
   }
 
   @override
@@ -88,178 +173,184 @@ class _Search3ViewState extends State<Search3View> {
           ),
         ),
       ),
-      body: Directionality(
-        textDirection: TextDirection.ltr,
-        child: ListView(
-          padding: EdgeInsets.all(8.0),
-          children: [
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: 8.0),
-              child: SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  children: [
-                    InkWell(
-                      onTap: () {
-                        // عند الضغط على الأيقونة، انتقل إلى صفحة Search4View
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => Search4View()),
-                        );
-                      },
-                      child: Image.asset(
-                        'assets/images/setting-4.png', // استخدم المسار الصحيح للأيقونة
-                        width: 24, // يمكنك تعديل الحجم كما يناسبك
-                        height: 24,
-                      ),
+      body: Stack( // استخدام Stack لعرض محتويات الصفحة والـContainer في نفس الوقت
+        children: [
+          Directionality(
+            textDirection: TextDirection.ltr,
+            child: ListView(
+              padding: EdgeInsets.all(8.0),
+              children: [
+                Container(
+                  padding: EdgeInsets.symmetric(horizontal: 8.0),
+                  child: SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      children: [
+                        InkWell(
+                          onTap: () {
+                            // عند الضغط على الأيقونة، انتقل إلى صفحة Search4View
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => Search4View()),
+                            );
+                          },
+                          child: Image.asset(
+                            'assets/images/setting-4.png', // استخدم المسار الصحيح للأيقونة
+                            width: 24, // يمكنك تعديل الحجم كما يناسبك
+                            height: 24,
+                          ),
+                        ),
+                        SizedBox(width: 8),
+                        GestureDetector(
+                          onTap: () {
+                            selectJobType('Remote');
+                          },
+                          child: Container(
+                            padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                            decoration: BoxDecoration(
+                              color: selectedJobType == 'Remote' ? Colors.blue : Colors.white,
+                              borderRadius: BorderRadius.circular(20),
+                              border: Border.all(color: selectedJobType == 'Remote' ? Colors.blue : Colors.grey),
+                            ),
+                            child: Row(
+                              children: [
+                                Text(
+                                  'Remote',
+                                  style: TextStyle(color: selectedJobType == 'Remote' ? Colors.white : Colors.grey),
+                                ),
+                                Icon(
+                                  Icons.arrow_drop_down,
+                                  color: selectedJobType == 'Remote' ? Colors.white : Colors.grey,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        SizedBox(width: 8),
+                        GestureDetector(
+                          onTap: () {
+                            selectJobType('Full Time');
+                          },
+                          child: Container(
+                            padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                            decoration: BoxDecoration(
+                              color: selectedJobType == 'Full Time' ? Colors.blue : Colors.white,
+                              borderRadius: BorderRadius.circular(20),
+                              border: Border.all(color: selectedJobType == 'Full Time' ? Colors.blue : Colors.grey),
+                            ),
+                            child: Row(
+                              children: [
+                                Text(
+                                  'Full Time',
+                                  style: TextStyle(color: selectedJobType == 'Full Time' ? Colors.white : Colors.grey),
+                                ),
+                                Icon(
+                                  Icons.arrow_drop_down,
+                                  color: selectedJobType == 'Full Time' ? Colors.white : Colors.grey,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        SizedBox(width: 8),
+                        GestureDetector(
+                          onTap: () {
+                            selectJobType('Post date');
+                          },
+                          child: Container(
+                            padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                            decoration: BoxDecoration(
+                              color: selectedJobType == 'Post date' ? Colors.blue : Colors.white,
+                              borderRadius: BorderRadius.circular(20),
+                              border: Border.all(color: selectedJobType == 'Post date' ? Colors.blue : Colors.grey),
+                            ),
+                            child: Row(
+                              children: [
+                                Text(
+                                  'Post date',
+                                  style: TextStyle(color: selectedJobType == 'Post date' ? Colors.white : Colors.grey),
+                                ),
+                                Icon(
+                                  Icons.arrow_drop_down,
+                                  color: selectedJobType == 'Post date' ? Colors.white : Colors.grey,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
-                    SizedBox(width: 8),
-                    GestureDetector(
-                      onTap: () {
-                        selectJobType('Remote');
-                      },
-                      child: Container(
-                        padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                        decoration: BoxDecoration(
-                          color: selectedJobType == 'Remote' ? Colors.blue : Colors.white,
-                          borderRadius: BorderRadius.circular(20),
-                          border: Border.all(color: selectedJobType == 'Remote' ? Colors.blue : Colors.grey),
-                        ),
-                        child: Row(
-                          children: [
-                            Text(
-                              'Remote',
-                              style: TextStyle(color: selectedJobType == 'Remote' ? Colors.white : Colors.grey),
-                            ),
-                            Icon(
-                              Icons.arrow_drop_down,
-                              color: selectedJobType == 'Remote' ? Colors.white : Colors.grey,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    SizedBox(width: 8),
-                    GestureDetector(
-                      onTap: () {
-                        selectJobType('Full Time');
-                      },
-                      child: Container(
-                        padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                        decoration: BoxDecoration(
-                          color: selectedJobType == 'Full Time' ? Colors.blue : Colors.white,
-                          borderRadius: BorderRadius.circular(20),
-                          border: Border.all(color: selectedJobType == 'Full Time' ? Colors.blue : Colors.grey),
-                        ),
-                        child: Row(
-                          children: [
-                            Text(
-                              'Full Time',
-                              style: TextStyle(color: selectedJobType == 'Full Time' ? Colors.white : Colors.grey),
-                            ),
-                            Icon(
-                              Icons.arrow_drop_down,
-                              color: selectedJobType == 'Full Time' ? Colors.white : Colors.grey,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    SizedBox(width: 8),
-                    GestureDetector(
-                      onTap: () {
-                        selectJobType('Post date');
-                      },
-                      child: Container(
-                        padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                        decoration: BoxDecoration(
-                          color: selectedJobType == 'Post date' ? Colors.blue : Colors.white,
-                          borderRadius: BorderRadius.circular(20),
-                          border: Border.all(color: selectedJobType == 'Post date' ? Colors.blue : Colors.grey),
-                        ),
-                        child: Row(
-                          children: [
-                            Text(
-                              'Post date',
-                              style: TextStyle(color: selectedJobType == 'Post date' ? Colors.white : Colors.grey),
-                            ),
-                            Icon(
-                              Icons.arrow_drop_down,
-                              color: selectedJobType == 'Post date' ? Colors.white : Colors.grey,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
+                  ),
                 ),
-              ),
+                SizedBox(height: 20,),
+                Container(
+                  height: 36,
+                  color: Color(0xFFE5E7EB),
+                  alignment: Alignment.centerLeft,
+                  padding: EdgeInsets.symmetric(horizontal: 16),
+                  child: Text('Featuring 120+ jobs', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                ),
+                JobCard(
+                  companyLogo: 'assets/images/Twitter Logo.png',
+                  jobTitle: 'UI/UX Designer',
+                  companyName: 'Twitter',
+                  location: 'Jakarta, Indonesia',
+                  salary: '\$10K/Month',
+                  jobType1: 'Fulltime',
+                  jobType2: 'Remote',
+                  selectJobType: selectJobType,
+                  selectedJobType: selectedJobType,
+                ),
+                JobCard(
+                  companyLogo: 'assets/images/Spectrum Logo.png',
+                  jobTitle: 'UI/UX Designer',
+                  companyName: 'Spectrum',
+                  location: 'Jakarta, Indonesia',
+                  salary: '\$10K/Month',
+                  jobType1: 'Fulltime',
+                  jobType2: 'Remote',
+                  selectJobType: selectJobType,
+                  selectedJobType: selectedJobType,
+                ),
+                JobCard(
+                  companyLogo: 'assets/images/VK Logo.png',
+                  jobTitle: 'Senior UI Designer',
+                  companyName: 'VK',
+                  location: 'Yogyakarta, Indonesia',
+                  salary: '\$12K/Month',
+                  jobType1: 'Fulltime',
+                  jobType2: 'Remote',
+                  selectJobType: selectJobType,
+                  selectedJobType: selectedJobType,
+                ),
+                JobCard(
+                  companyLogo: 'assets/images/Invision Logo.png',
+                  jobTitle: 'Junior UI Designer',
+                  companyName: 'Invision',
+                  location: 'Jakarta, Indonesia',
+                  salary: '\$9K/Month',
+                  jobType1: 'Part Time',
+                  jobType2: 'Remote',
+                  selectJobType: selectJobType,
+                  selectedJobType: selectedJobType,
+                ),
+                JobCard(
+                  companyLogo: 'assets/images/Behance Logo.png',
+                  jobTitle: 'Junior UI Designer',
+                  companyName: 'Behance',
+                  location: 'Surakarta, Indonesia',
+                  salary: '\$12K/Month',
+                  jobType1: 'Part Time',
+                  jobType2: 'Remote',
+                  selectJobType: selectJobType,
+                  selectedJobType: selectedJobType,
+                ),
+              ],
             ),
-            SizedBox(height: 20,),
-            Container(
-              height: 36,
-              color: Color(0xFFE5E7EB),
-              alignment: Alignment.centerLeft,
-              padding: EdgeInsets.symmetric(horizontal: 16),
-              child: Text('Featuring 120+ jobs', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-            ),
-            JobCard(
-              companyLogo: 'assets/images/Twitter Logo.png',
-              jobTitle: 'UI/UX Designer',
-              companyName: 'Twitter',
-              location: 'Jakarta, Indonesia',
-              salary: '\$10K/Month',
-              jobType1: 'Fulltime',
-              jobType2: 'Remote',
-              selectJobType: selectJobType,
-              selectedJobType: selectedJobType,
-            ),
-            JobCard(
-              companyLogo: 'assets/images/Spectrum Logo.png',
-              jobTitle: 'UI/UX Designer',
-              companyName: 'Spectrum',
-              location: 'Jakarta, Indonesia',
-              salary: '\$10K/Month',
-              jobType1: 'Fulltime',
-              jobType2: 'Remote',
-              selectJobType: selectJobType,
-              selectedJobType: selectedJobType,
-            ),
-            JobCard(
-              companyLogo: 'assets/images/VK Logo.png',
-              jobTitle: 'Senior UI Designer',
-              companyName: 'VK',
-              location: 'Yogyakarta, Indonesia',
-              salary: '\$12K/Month',
-              jobType1: 'Fulltime',
-              jobType2: 'Remote',
-              selectJobType: selectJobType,
-              selectedJobType: selectedJobType,
-            ),
-            JobCard(
-              companyLogo: 'assets/images/Invision Logo.png',
-              jobTitle: 'Junior UI Designer',
-              companyName: 'Invision',
-              location: 'Jakarta, Indonesia',
-              salary: '\$9K/Month',
-              jobType1: 'Part Time',
-              jobType2: 'Remote',
-              selectJobType: selectJobType,
-              selectedJobType: selectedJobType,
-            ),
-            JobCard(
-              companyLogo: 'assets/images/Behance Logo.png',
-              jobTitle: 'Junior UI Designer',
-              companyName: 'Behance',
-              location: 'Surakarta, Indonesia',
-              salary: '\$12K/Month',
-              jobType1: 'Part Time',
-              jobType2: 'Remote',
-              selectJobType: selectJobType,
-              selectedJobType: selectedJobType,
-            ),
-          ],
-        ),
+          ),
+
+          // تم إزالة الـContainer الذي كان يظهر في أسفل الشاشة واستخدام الـBottom Sheet بدلاً من ذلك.
+        ],
       ),
     );
   }
@@ -303,7 +394,7 @@ class _JobCardState extends State<JobCard> {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => ApplyJobView(),
+            builder: (context) => JobDetailView(),
           ),
         );
       },

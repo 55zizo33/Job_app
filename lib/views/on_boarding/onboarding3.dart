@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:jobs_app/views/create_account/account.dart';
+import 'package:jobs_app/views/sign_up/login.dart';
 
 class OnboardingView3 extends StatelessWidget {
   const OnboardingView3({super.key});
@@ -110,7 +111,7 @@ class OnboardingView3 extends StatelessWidget {
                     onPressed: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => CreateAccount()),
+                        MaterialPageRoute(builder: (context) => LoginView()),
                       );
                     },
                     style: ElevatedButton.styleFrom(
