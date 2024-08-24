@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:jobs_app/views/home_screen/search.dart';
-import 'package:jobs_app/views/sign_up/login.dart';
+import 'package:jobs_app/views/sign_in/login.dart';
 
 class SetUpView extends StatelessWidget {
   const SetUpView({super.key});

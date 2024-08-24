@@ -4,7 +4,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:dio/dio.dart';
 import 'package:jobs_app/views/create_account/working.dart';
-import 'package:jobs_app/views/sign_up/login.dart';
+import 'package:jobs_app/views/sign_in/login.dart';
 
 class CreateAccount extends StatefulWidget {
   @override

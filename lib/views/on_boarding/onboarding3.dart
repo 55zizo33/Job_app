@@ -1,6 +1,10 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:jobs_app/cubit/Auth/AuthRepository.dart';
+import 'package:jobs_app/cubit/Auth/auth_cubit.dart';
 import 'package:jobs_app/views/create_account/account.dart';
-import 'package:jobs_app/views/sign_up/login.dart';
+import 'package:jobs_app/views/sign_in/login.dart';
 
 class OnboardingView3 extends StatelessWidget {
   const OnboardingView3({super.key});
@@ -111,7 +115,11 @@ class OnboardingView3 extends StatelessWidget {
                     onPressed: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => LoginView()),
+
+                        MaterialPageRoute(builder: (context) => BlocProvider(
+                          create: (context) => AuthCubit( AuthRepository()),
+                          child: LoginView(),)
+                        ),
                       );
                     },
                     style: ElevatedButton.styleFrom(

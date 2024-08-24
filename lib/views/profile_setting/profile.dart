@@ -2,21 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:jobs_app/views/complete_profil/complete_profile.dart';
 import 'package:jobs_app/views/home_screen/search.dart';
-import 'package:jobs_app/views/sign_up/login.dart';
+import 'package:jobs_app/views/sign_in/login.dart';
 import 'terms.dart';
 import 'privacy_policy.dart';
 import 'help_center.dart';
-import 'package:jobs_app/core/logic/dio_helper.dart';
 
-
-class Profile extends StatefulWidget {
+class Profile extends StatelessWidget {
   const Profile({super.key});
 
-  @override
-  State<Profile> createState() => _ProfileState();
-}
-
-class _ProfileState extends State<Profile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,24 +18,24 @@ class _ProfileState extends State<Profile> {
           Container(
             height: 195.5,
             width: double.infinity,
-            color: Color(0xFFD6E4FF),
+            color: const Color(0xFFD6E4FF),
           ),
           SingleChildScrollView(
             child: Column(
               children: [
-                SizedBox(height: 130),
-                Center(
+                const SizedBox(height: 130),
+                const Center(
                   child: CircleAvatar(
                     radius: 50,
                     backgroundImage: AssetImage("assets/images/Profile (1).png"),
                   ),
                 ),
-                SizedBox(height: 10),
-                Text(
+                const SizedBox(height: 10),
+                const Text(
                   'Rafif Dian Axelmega',
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ),
-                Text('Senior UI/UX Designer'),
+                const Text('Senior UI/UX Designer'),
                 SizedBox(height: 20),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20.0),

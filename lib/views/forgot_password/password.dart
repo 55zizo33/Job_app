@@ -5,7 +5,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:jobs_app/views/forgot_password/password_2.dart';
-import 'package:jobs_app/views/sign_up/login.dart';
+import 'package:jobs_app/views/sign_in/login.dart';
 
 class PasswordView extends StatelessWidget {
   const PasswordView({super.key});
