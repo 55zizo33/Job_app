@@ -2,6 +2,9 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:jobs_app/views/apply_job/apply_job1.dart';
+import 'package:jobs_app/views/apply_job/apply_job2.dart';
+import 'package:jobs_app/views/apply_job/apply_job3.dart';
 import 'package:jobs_app/views/create_account/account.dart';
 import 'package:jobs_app/views/create_account/cubit.dart';
 import 'package:jobs_app/views/create_account/Repository.dart';
@@ -56,7 +59,7 @@ class _MyAppState extends State<MyApp> {
           supportedLocales: context.supportedLocales,
           locale: context.locale,
           debugShowCheckedModeBanner: false,
-          home: CreateAccount(),
+          home: ApplyJobView(),
           routes: {
             '/edit_profile': (context) => EditProfile(),
             '/portfolio': (context) => Portfolio(),

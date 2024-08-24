@@ -31,26 +31,26 @@ class _ApplyJobViewState extends State<ApplyJobView> {
         ),
         centerTitle: true,
       ),
-      body: Column(
-        children: [
-          SizedBox(height: 34), // Add space of 34 between AppBar and body
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                _buildStepIcon(0, '1', 'Biodata'),
-                _buildStepLine(),
-                _buildStepIcon(1, '2', 'Type of work'),
-                _buildStepLine(),
-                _buildStepIcon(2, '3', 'Upload portfolio'),
-              ],
+      body: SingleChildScrollView( // استخدام SingleChildScrollView لتجنب overflow
+        child: Column(
+          children: [
+            SizedBox(height: 34), // Add space of 34 between AppBar and body
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  _buildStepIcon(0, '1', 'Biodata'),
+                  _buildStepLine(),
+                  _buildStepIcon(1, '2', 'Type of work'),
+                  _buildStepLine(),
+                  _buildStepIcon(2, '3', 'Upload portfolio'),
+                ],
+              ),
             ),
-          ),
-          Expanded(
-            child: _buildStepContent(),
-          ),
-        ],
+            _buildStepContent(),
+          ],
+        ),
       ),
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -75,9 +75,7 @@ class _ApplyJobViewState extends State<ApplyJobView> {
               }
             });
           },
-          child: Text('Next', style: TextStyle(fontSize: 16,
-              color: Colors.white
-          )),
+          child: Text('Next', style: TextStyle(fontSize: 16, color: Colors.white)),
         ),
       ),
     );
